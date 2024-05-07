@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/readme
+type: text/vnd.tiddlywiki
+
+\define lingo-base() $:/plugins/linonetwo/hyper-table/language/
+
+<<lingo "Readme">>
