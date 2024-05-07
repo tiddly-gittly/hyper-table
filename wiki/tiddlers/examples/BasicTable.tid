@@ -1,0 +1,94 @@
+title: examples/BasicTable
+
+<$basic-table
+  height="200px"
+  records="""
+  [
+    {
+      "230517143221027": "CA-2018-156720",
+      "230517143221030": "JM-15580",
+      "230517143221032": "Bagged Rubber Bands",
+      "230517143221023": "Office Supplies",
+      "230517143221034": "Fasteners",
+      "230517143221037": "West",
+      "230517143221024": "Loveland",
+      "230517143221029": "2018-12-30",
+      "230517143221042": "3",
+      "230517143221040": "3.024",
+      "230517143221041": "-0.605"
+    },
+    {
+      "230517143221027": "CA-2018-115427",
+      "230517143221030": "EB-13975",
+      "230517143221032": "GBC Binding covers",
+      "230517143221023": "Office Supplies",
+      "230517143221034": "Binders",
+      "230517143221037": "West",
+      "230517143221024": "Fairfield",
+      "230517143221029": "2018-12-30",
+      "230517143221042": "2",
+      "230517143221040": "20.72",
+      "230517143221041": "6.475"
+    }
+  ]
+  """
+  columns="""
+  [
+    {
+      field: '230517143221027',
+      title: 'Order ID',
+      width: 'auto',
+    },
+    {
+      field: '230517143221030',
+      title: 'Customer ID',
+      width: 'auto',
+    },
+    {
+      field: '230517143221032',
+      title: 'Product Name',
+      width: 'auto',
+    },
+    {
+      field: '230517143221023',
+      title: 'Category',
+      width: 'auto',
+    },
+    {
+      field: '230517143221034',
+      title: 'Sub-Category',
+      width: 'auto',
+    },
+    {
+      field: '230517143221037',
+      title: 'Region',
+      width: 'auto',
+    },
+    {
+      field: '230517143221024',
+      title: 'City',
+      width: 'auto',
+    },
+    {
+      field: '230517143221029',
+      title: 'Order Date',
+      width: 'auto',
+    },
+    {
+      field: '230517143221042',
+      title: 'Quantity',
+      width: 'auto',
+    },
+    {
+      field: '230517143221040',
+      title: 'Sales',
+      width: 'auto',
+    },
+    {
+      field: '230517143221041',
+      title: 'Profit',
+      width: 'auto',
+    },
+  ]
+  """
+/>

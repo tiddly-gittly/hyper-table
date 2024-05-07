@@ -11,6 +11,11 @@ class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
 
   refresh(_changedTiddlers: IChangedTiddlers) {
+    const changedAttributes = this.computeAttributes();
+    if ($tw.utils.count(changedAttributes) > 0) {
+      this.refreshSelf();
+      return true;
+    }
     return false;
   }
 
@@ -143,7 +148,7 @@ class PivotTableWidget extends ListTableWidget {
   private getPivotOption<T extends IIndicator[] | string[] | undefined>(field: string, defaultValue: string[]): T;
   private getPivotOption<T extends IColumnDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T;
   private getPivotOption<T extends TYPES.IRowDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T {
-    const columnsString = this.getAttribute('columns')?.trim?.();
+    const columnsString = this.getAttribute(field)?.trim?.();
     let columns = defaultValue as T;
     if (columnsString) {
       try {

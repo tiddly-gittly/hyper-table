@@ -1,0 +1,21 @@
+title: language/zh-Hans/Index
+
+!! 例子
+
+!!! 基本表格
+
+基本表格是一种常见的可视化数据形式，用于展示和组织数据。它由行和列的网格状结构组成，以清晰、结构化的方式呈现大量数据。基本表格通常提供一些交互和可视化功能，使用户能够对数据进行查找、排序、分页和格式化等操作。
+
+{{examples/BasicTable}}
+
+<$codeblock code={{examples/BasicTable!!text}} />
+
+!!! 数据透视表
+
+数据透视表又名多维分析表、交叉表、Pivot Table，指的是可以在行维度和列维度放入一个或多个维度，显示维度之间相互关系的一种表格。用户可以一目了然地分析出各种场景指标以及对比，旨在帮助业务分析推动决策。
+
+例子基于 [ext[https://visactor.io/vtable/demo/table-type/pivot-analysis-table]]
+
+{{examples/PivotTable}}
+
+<$codeblock code={{examples/PivotTable!!text}} />
