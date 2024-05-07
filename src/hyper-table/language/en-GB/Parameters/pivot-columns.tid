@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/pivot-columns
+tags: PivotTable
+field: columns
+description: The style and format configuration corresponding to the header of each level of dimensions should be set separately for each dimension. The configuration items will vary slightly depending on the headerType. Supported headerType values are: 'text' | 'link' | 'image' | 'video'
+example: Configuration is complex, see the official documentation for details. However, you can use a simple array of strings to indicate which fields in the data to use, e.g. ['name', 'age'].
+url: https://visactor.io/vtable/option/PivotChart#columns

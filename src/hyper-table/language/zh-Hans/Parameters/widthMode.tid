@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/widthMode
+tags: BasicTable PivotTable
+field: widthMode
+description: 表格列宽度的计算模式
+example: 可以是 'standard'（标准模式）、'adaptive'（自适应容器宽度模式）或 'autoWidth'（自动宽度模式），默认为 'standard'，会占满表格容器的宽度。
+url: https://visactor.io/vtable/option/ListTable#widthMode('standard'%20%7C%20'adaptive'%20%7C%20'autoWidth')%20=%20'standard'

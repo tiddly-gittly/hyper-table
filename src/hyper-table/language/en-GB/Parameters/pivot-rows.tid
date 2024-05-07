@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/pivot-rows
+tags: PivotTable
+field: rows
+description: The row header corresponds to the style and format configuration of each level of dimension. Each type of dimension needs to be set separately. The configuration items have slight differences according to the headerType. The supported headerTypes are: 'text' | 'link' | 'image' | 'video'
+example: Configuration is complex, see the official documentation for details. However, it is possible to use a simple array of strings to indicate which fields in the data are to be used, e.g. ['title']
+url: https://visactor.io/vtable/option/PivotChart#rows

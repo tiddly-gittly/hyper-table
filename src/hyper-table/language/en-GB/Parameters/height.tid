@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/height
+tags: BasicTable PivotTable
+field: height
+description: The width of the table container, similar to the CSS height.
+example: 100% 500px

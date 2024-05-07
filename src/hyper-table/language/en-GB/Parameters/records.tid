@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/records
+tags: BasicTable PivotTable
+field: records
+description: Table data source JSON
+example: JSON data can be entered as a multi-line string or embedded. JS syntax can be used (e.g., tailing commas, omitting quotes from field names, `new Date()`, etc.).
+url: https://visactor.io/vtable/option/ListTable#records

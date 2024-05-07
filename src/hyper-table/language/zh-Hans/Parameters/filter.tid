@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/filter
+tags: BasicTable PivotTable
+field: filter
+description: 表格数据源筛选器
+example: 筛选出标题列表即可，微件会自动转换标题列表为字段 JSON 列表，填入表格选项的 records 字段，作为数据源。当 filter 存在时，会覆盖 records 字段。

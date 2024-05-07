@@ -1,0 +1,42 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
+
+\procedure lingo-base() $:/plugins/linonetwo/hyper-table/language/
+\procedure columns()
+  [
+    {
+      field: 'field',
+      title: 'Options Field',
+      width: 'auto',
+    },
+    {
+      field: 'description',
+      title: 'Description',
+      width: 'auto',
+    },
+    {
+      field: 'example',
+      title: 'Example usage',
+      width: 'auto',
+    },
+    {
+      field: 'url',
+      title: 'Document URL',
+      width: 'auto',
+      cellType: 'link',
+    },
+  ]
+\end
+
+!!! BasicTable
+
+<$basic-table
+  filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/]tag[BasicTable]]"
+  columns=<<columns>>
+/>
+
+!!! PivotTable
+
+<$basic-table
+  filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/]tag[PivotTable]]"
+  columns=<<columns>>
+/>

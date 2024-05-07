@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/pivot-indicators
+tags: PivotTable
+field: indicators
+description: The specific configuration of each indicator in the perspective combination chart, such as style, format, title, etc., is different from the pivot table. The indicator type here only supports the configuration of the chart type.
+example: Configuration is complex, see the official documentation for details. However, you can use a simple array of strings to indicate which fields in the data to use, e.g. ['created', 'modified'].
+url: https://visactor.io/vtable/option/PivotChart#indicators

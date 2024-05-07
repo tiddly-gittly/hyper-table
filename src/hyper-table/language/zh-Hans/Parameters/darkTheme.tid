@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/darkTheme
+tags: BasicTable PivotTable
+field: darkTheme
+description: 暗色时使用的主题
+example: 可选主题有 DARK BRIGHT ARCO DEFAULT SIMPLIFY，默认为 DARK

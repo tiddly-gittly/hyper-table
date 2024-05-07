@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/width
+tags: BasicTable PivotTable
+field: width
+description: The width of the table container, used similarly to width in CSS. note that this is not exactly the width of the table, it is determined by the widthMode field.
+example: 100% 300px

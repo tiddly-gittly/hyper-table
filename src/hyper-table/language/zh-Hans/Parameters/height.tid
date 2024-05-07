@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/height
+tags: BasicTable PivotTable
+field: height
+description: 表格容器的宽度，用法类似 CSS 的 height
+example: 100% 500px

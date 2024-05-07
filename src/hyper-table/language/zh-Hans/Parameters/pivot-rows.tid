@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/pivot-rows
+tags: PivotTable
+field: rows
+description: 行表头对应各级维度的样式及format配置，每中维度需要分别设置配置项，配置项根据headerType不同有略微差别，headerType可支持：'text' | 'link' | 'image' | 'video'
+example: 配置较为复杂，具体详见官方文档。不过可以使用简单的字符串数组表明要使用数据里的哪些字段，例如 ['title']
+url: https://visactor.io/vtable/option/PivotChart#rows

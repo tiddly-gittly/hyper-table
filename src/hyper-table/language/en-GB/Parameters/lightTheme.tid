@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/lightTheme
+tags: BasicTable PivotTable
+field: lightTheme
+description: Themes to use when bright colors
+example: The themes available are DARK BRIGHT ARCO DEFAULT SIMPLIFY, default to DEFAULT

@@ -1,0 +1,42 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
+
+\procedure lingo-base() $:/plugins/linonetwo/hyper-table/language/
+\procedure columns()
+  [
+    {
+      field: 'field',
+      title: '配置项字段',
+      width: 'auto',
+    },
+    {
+      field: 'description',
+      title: '描述',
+      width: 'auto',
+    },
+    {
+      field: 'example',
+      title: '例子',
+      width: 'auto',
+    },
+    {
+      field: 'url',
+      title: '文档地址',
+      width: 'auto',
+      cellType: 'link',
+    },
+  ]
+\end
+
+!!! 基本表格
+
+<$basic-table
+  filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/]tag[BasicTable]]"
+  columns=<<columns>>
+/>
+
+!!! 数据透视表
+
+<$basic-table
+  filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/]tag[PivotTable]]"
+  columns=<<columns>>
+/>

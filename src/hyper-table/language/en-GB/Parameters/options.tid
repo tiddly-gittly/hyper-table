@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/options
+tags: BasicTable PivotTable
+field: options
+description: Add other configuration items, either in JS syntax or JSON. the configuration items here will override the default configuration items.
+example: Use features such as tooltip, see the visactor documentation for details.
+url: https://visactor.io/vtable/option/

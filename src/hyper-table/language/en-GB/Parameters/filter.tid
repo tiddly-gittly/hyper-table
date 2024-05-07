@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/filter
+tags: BasicTable PivotTable
+field: filter
+description: Table data source filter
+example: Filter to get a list of titles, the widget auto converts the list of title into a JSON list of their fields, populating the records field of the table options as the data source. When the filter field exists, it will override the records field of table widget.

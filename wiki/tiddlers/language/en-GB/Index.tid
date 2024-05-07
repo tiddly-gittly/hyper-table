@@ -1,18 +1,14 @@
-title: language/en-GB/Readme
+title: language/en-GB/Index
 
 !! Examples
 
-!!! Basic Tables
-
-A basic table is a common form of visual data used to present and organize data. It consists of a grid-like structure of rows and columns that presents large amounts of data in a clear, structured manner. Basic tables often provide some interaction and visualization capabilities that enable users to find, sort, paginate, and format data.
+!!! Basic Table
 
 {{examples/BasicTable}}
 
 <$codeblock code={{examples/BasicTable!!text}} />
 
 !!! Pivot Table
-
-Pivot table, also known as multidimensional analysis table, cross table, Pivot table, refers to a table that can put one or more Dimensions in row Dimensions and column Dimensions to display the relationship between Dimensions. Users can analyze various scenarios at a glance Metirc and comparison, designed to help business analysis drive decision-making.
 
 Example based on [ext[https://visactor.io/vtable/demo/table-type/pivot-analysis-table]]
 

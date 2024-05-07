@@ -6,4 +6,21 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/Readme
 
 <<lingo Description>>
 
-Write readme here.
+!! Use Widget
+
+This plugin provides several widgets:
+
+# Basic Table
+#* A basic table is a common form of visual data used to present and organize data. It consists of a grid-like structure of rows and columns that presents large amounts of data in a clear, structured manner. Basic tables often provide some interaction and visualization capabilities that enable users to find, sort, paginate, and format data.
+#* widget is `<$basic-table />`
+# Pivot Table
+#* Pivot table, also known as multidimensional analysis table, cross table, Pivot table, refers to a table that can put one or more Dimensions in row Dimensions and column Dimensions to display the relationship between Dimensions. Users can analyze various scenarios at a glance Metirc and comparison, designed to help business analysis drive decision-making.
+#* widget is `<$pivot-table />`
+
+!!! <<lingo ParametersTable/Caption>>
+
+[[Read the Parameters Table|$:/plugins/linonetwo/hyper-table/ParametersTable]]
+
+See also source code of ParametersTable:
+
+<$codeblock code={{$:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable}} />

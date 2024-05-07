@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/widthMode
+tags: BasicTable PivotTable
+field: widthMode
+description: Table column width calculation mode
+example: can be 'standard' (standard mode), 'adaptive' (container width adaptive mode) or 'autoWidth' (automatic width mode), default is 'standard'.
+url: https://visactor.io/vtable/option/ListTable#widthMode('standard'%20%7C%20'adaptive'%20%7C%20'autoWidth')%20=%20'standard'

@@ -6,4 +6,21 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Readme
 
 <<lingo Description>>
 
-在这里写自述文档。
+!! 使用微件
+
+本插件提供几种微件：
+
+# 基本表格
+#* 基本表格是一种常见的可视化数据形式，用于展示和组织数据。它由行和列的网格状结构组成，以清晰、结构化的方式呈现大量数据。基本表格通常提供一些交互和可视化功能，使用户能够对数据进行查找、排序、分页和格式化等操作。
+#* 微件为 `<$basic-table />`
+# 数据透视表
+#* 数据透视表又名多维分析表、交叉表、Pivot Table，指的是可以在行维度和列维度放入一个或多个维度，显示维度之间相互关系的一种表格。用户可以一目了然地分析出各种场景指标以及对比，旨在帮助业务分析推动决策。
+#* 微件为 `<$pivot-table />`
+
+!!! <<lingo ParametersTable/Caption>>
+
+[[查看参数表|$:/plugins/linonetwo/hyper-table/ParametersTable]]
+
+也可以学习一下参数表的源代码：
+
+<$codeblock code={{$:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable}} />

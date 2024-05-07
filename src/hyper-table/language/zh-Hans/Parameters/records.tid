@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/records
+tags: BasicTable PivotTable
+field: records
+description: 表格数据源 JSON
+example: 可以用多行字符串或嵌入的方式，输入 JSON 数据。可以使用 JS 语法（如行尾都加逗号、省略字段名的引号、`new Date()` 等）。
+url: https://visactor.io/vtable/option/ListTable#records

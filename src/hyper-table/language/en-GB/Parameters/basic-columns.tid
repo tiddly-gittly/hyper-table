@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/basic-columns
+tags: BasicTable
+field: columns
+description: Table column configuration, each column needs to set configuration items separately, and the configuration items differ slightly depending on the cellType. cellType can support: 'text' | 'link' | 'image' | 'video' | 'sparkline' | 'progressbar' | 'chart
+example: [{ field: 'title', title: 'Title', width: 'auto' }]
+url: https://visactor.io/vtable/option/ListTable#columns

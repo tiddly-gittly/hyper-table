@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/darkTheme
+tags: BasicTable PivotTable
+field: darkTheme
+description: Themes to use when dark
+example: The themes available are DARK BRIGHT ARCO DEFAULT SIMPLIFY, default to DARK

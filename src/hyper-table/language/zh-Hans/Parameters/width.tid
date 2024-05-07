@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/width
+tags: BasicTable PivotTable
+field: width
+description: 表格容器的宽度，用法类似 CSS 的 width。注意这不完全是表格的宽度，根据 widthMode 字段决定。
+example: 100% 300px

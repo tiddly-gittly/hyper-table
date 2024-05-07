@@ -1,0 +1,6 @@
+title: $:/plugins/linonetwo/hyper-table/ParametersTable
+caption: <<lingo ParametersTable/Caption $:/plugins/linonetwo/hyper-table/language/>>
+
+\define lingo-base() $:/plugins/linonetwo/hyper-table/language/
+
+<<lingo ParametersTable>>
