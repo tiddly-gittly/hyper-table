@@ -12,12 +12,19 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
     {
       field: 'description',
       title: 'Description',
-      width: 'auto',
+      width: 400,
+      style: {
+        // wrap text take effect only when `defaultRowHeight` is enabled
+        autoWrapText: true,
+      },
     },
     {
       field: 'example',
       title: 'Example usage',
-      width: 'auto',
+      width: 400,
+      style: {
+        autoWrapText: true,
+      },
     },
     {
       field: 'url',
@@ -34,6 +41,7 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
 <$basic-table
   filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/]tag[BasicTable]]"
   columns=<<columns>>
+  options="{ defaultRowHeight: 60 }"
 />
 
 !!! PivotTable
@@ -41,4 +49,5 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
 <$basic-table
   filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/]tag[PivotTable]]"
   columns=<<columns>>
+  options="{ defaultRowHeight: 60 }"
 />

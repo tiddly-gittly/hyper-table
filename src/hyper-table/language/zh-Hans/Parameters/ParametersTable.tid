@@ -6,23 +6,30 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
     {
       field: 'field',
       title: '配置项字段',
-      width: 'auto',
+      width: 200,
       sort: true,
     },
     {
       field: 'description',
       title: '描述',
-      width: 'auto',
+      width: 400,
+      style: {
+        // 启用 `defaultRowHeight` 的时候，换行才生效
+        autoWrapText: true,
+      },
     },
     {
       field: 'example',
       title: '例子',
-      width: 'auto',
+      width: 400,
+      style: {
+        autoWrapText: true,
+      },
     },
     {
       field: 'url',
       title: '文档地址',
-      width: 'auto',
+      width: 200,
       cellType: 'link',
       sort: true,
     },
@@ -34,6 +41,7 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
 <$basic-table
   filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/]tag[BasicTable]]"
   columns=<<columns>>
+  options="{ defaultRowHeight: 60 }"
 />
 
 !!! 数据透视表
@@ -41,4 +49,5 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
 <$basic-table
   filter="[all[shadows]prefix[$:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/]tag[PivotTable]]"
   columns=<<columns>>
+  options="{ defaultRowHeight: 60 }"
 />
