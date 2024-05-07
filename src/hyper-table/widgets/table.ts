@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes, TYPES } from '@visactor/vtable';
-import { IColumnDimension, IIndicator } from '@visactor/vtable/es/ts-types';
+import { IColumnDimension, IIndicator, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 
 class ListTableWidget extends Widget {
@@ -39,6 +39,10 @@ class ListTableWidget extends Widget {
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
     this.tableInstance = new ListTable(option);
+    const enableTitleFieldNavigate = this.getAttribute('titleNav') !== 'no';
+    if (enableTitleFieldNavigate) {
+      this.tableInstance.on(ListTable.EVENT_TYPE.CLICK_CELL, this.onTitleClickEvent.bind(this));
+    }
 
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
@@ -67,6 +71,16 @@ class ListTableWidget extends Widget {
       // eslint-disable-next-line import/namespace
       theme: isDarkMode ? themes[darkTheme] : themes[lightTheme],
     };
+  }
+
+  protected onTitleClickEvent(event: MousePointerCellEvent) {
+    if (event.field === 'title') {
+      this.dispatchEvent({
+        type: 'tm-navigate',
+        navigateTo: event.value,
+        navigateFromTitle: this.getVariable('currentTiddler'),
+      });
+    }
   }
 
   removeChildDomNodes(): void {

@@ -33,6 +33,14 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
       cellType: 'link',
       sort: true,
     },
+    {
+      field: 'title',
+      title: 'Tiddler',
+      width: 300,
+      style: {
+        autoWrapText: true,
+      },
+    },
   ]
 \end
 

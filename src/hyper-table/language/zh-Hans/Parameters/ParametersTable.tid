@@ -33,6 +33,14 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
       cellType: 'link',
       sort: true,
     },
+    {
+      field: 'title',
+      title: '条目',
+      width: 300,
+      style: {
+        autoWrapText: true,
+      },
+    },
   ]
 \end
 
