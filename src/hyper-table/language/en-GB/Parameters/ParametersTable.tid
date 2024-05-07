@@ -7,6 +7,7 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
       field: 'field',
       title: 'Options Field',
       width: 'auto',
+      sort: true,
     },
     {
       field: 'description',
@@ -23,6 +24,7 @@ title: $:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable
       title: 'Document URL',
       width: 'auto',
       cellType: 'link',
+      sort: true,
     },
   ]
 \end

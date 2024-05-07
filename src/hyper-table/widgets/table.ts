@@ -26,6 +26,13 @@ class ListTableWidget extends Widget {
     const containerElement = this.getContainerElement();
     const option: ListTableConstructorOptions = {
       container: containerElement,
+      keyboardOptions: {
+        copySelected: true,
+        pasteValueToCell: true,
+        selectAllOnCtrlA: true,
+        editCellOnEnter: true,
+        moveFocusCellOnTab: true,
+      },
       ...this.getCommonOptions(),
       records: this.getRecords(),
       columns: this.getListColumns(),
@@ -132,6 +139,13 @@ class PivotTableWidget extends ListTableWidget {
     const containerElement = this.getContainerElement();
     const option: PivotTableConstructorOptions = {
       container: containerElement,
+      keyboardOptions: {
+        copySelected: true,
+        pasteValueToCell: true,
+        selectAllOnCtrlA: true,
+        editCellOnEnter: true,
+        moveFocusCellOnTab: true,
+      },
       ...this.getCommonOptions(),
       records: this.getRecords(),
       columns: this.getPivotOption<IColumnDimension[]>('columns', ['tags']),

@@ -7,6 +7,7 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
       field: 'field',
       title: '配置项字段',
       width: 'auto',
+      sort: true,
     },
     {
       field: 'description',
@@ -23,6 +24,7 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable
       title: '文档地址',
       width: 'auto',
       cellType: 'link',
+      sort: true,
     },
   ]
 \end

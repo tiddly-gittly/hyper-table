@@ -38,56 +38,67 @@ title: examples/BasicTable
       field: '230517143221027',
       title: 'Order ID',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221030',
       title: 'Customer ID',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221032',
       title: 'Product Name',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221023',
       title: 'Category',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221034',
       title: 'Sub-Category',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221037',
       title: 'Region',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221024',
       title: 'City',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221029',
       title: 'Order Date',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221042',
       title: 'Quantity',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221040',
       title: 'Sales',
       width: 'auto',
+      sort: true,
     },
     {
       field: '230517143221041',
       title: 'Profit',
       width: 'auto',
+      sort: true,
     },
   ]
   """
