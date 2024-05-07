@@ -1,8 +1,8 @@
 title: $:/plugins/linonetwo/hyper-table/language/en-GB/
 
-Name: Unnamed Plugin
-Description: Unfilled Description
-Configs/Description: These settings let you customise the behaviour of "Unnamed Plugin" plugin.
+Name: High-Dimensional Tables
+Description: Present large amounts of data beautifully and efficiently, generate pivot tables and other advanced table presentations for tiddlers.
+Configs/Description: These settings let you customise the behaviour of "High-Dimensional Tables" plugin.
 Configs/PluginConfigs/Caption: Plugin Configs
 Configs/XXX/Caption: XXX
 Configs/XXX/Description: XXX is XXX
