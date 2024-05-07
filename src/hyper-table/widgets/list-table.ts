@@ -52,16 +52,19 @@ class ListTableWidget extends Widget {
 
   protected getRecords(): unknown[] | undefined {
     const filter = this.getAttribute('filter');
-    const recordsString = this.getAttribute('records');
+    // remove padding new lines, so it won't change line after `return` in the `new Function`, which cause return undefined.
+    const recordsString = this.getAttribute('records')?.trim?.();
     let records: unknown[] | undefined = [];
     if (filter) {
       records = this.wiki.filterTiddlers(filter).map((title) => $tw.wiki.getTiddler(title)?.fields).filter((item): item is ITiddlerFields => item !== undefined);
     } else if (recordsString) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        records = new Function(
+        const parsedRecords = new Function(
           `return ${recordsString}`,
         )() as unknown[] | undefined;
+        if (parsedRecords !== undefined) {
+          records = parsedRecords;
+        }
       } catch (error) {
         console.error(`hyper-table list-table failed to parse records\n\n${recordsString}`, error);
       }
@@ -70,15 +73,14 @@ class ListTableWidget extends Widget {
   }
 
   protected getColumns(): TYPES.ColumnsDefine | undefined {
-    const columnsString = this.getAttribute('columns');
+    const columnsString = this.getAttribute('columns')?.trim?.();
     let columns: TYPES.ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
     if (columnsString) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         const parsedColumns = new Function(
           `return ${columnsString}`,
         )() as TYPES.ColumnsDefine | undefined;
-        if (columns !== undefined) {
+        if (parsedColumns !== undefined) {
           columns = parsedColumns;
         }
       } catch (error) {
