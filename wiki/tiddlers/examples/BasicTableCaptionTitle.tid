@@ -3,5 +3,22 @@ title: examples/BasicTableCaptionTitle
 <$basic-table
   height="200px"
   filter="[all[shadows]tag[$:/tags/ViewToolbar]]"
-  columns="title|caption|description"
+  columns="""
+    [
+      {
+        field: 'title',
+        title: 'Title (Caption)',
+        fieldFormat: ({ caption }) => $tw.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', caption),
+        width: 'auto',
+      },
+      {
+        field: 'caption',
+        title: 'Caption',
+        fieldFormat: ({ caption }) => $tw.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', caption),
+        width: 'auto',
+      },
+      { field: 'tags', title: 'Tags', width: 120, },
+      { field: 'title', title: 'Title' },
+    ]
+  """
 />

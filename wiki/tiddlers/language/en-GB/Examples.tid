@@ -1,0 +1,47 @@
+title: language/en-GB/Examples
+
+! Basic table examples
+
+!! The simplest basic table
+
+TBD
+
+!! Basic table with filtered tiddlers
+
+{{examples/BasicTableWithFilter}}
+
+You can click on the column for the `title` field, which will open the corresponding tiddler.
+
+Note that the `caption` field and the `description` field are transclusion syntax written in Wikitext, and Widget will automatically render their transclusion results.
+
+<$codeblock code={{examples/BasicTableWithFilter!!text}} />
+
+!! Displaying the content of the caption field in the title field
+
+{{examples/BasicTableCaptionTitle}}
+
+The [ext[fieldFormat|https://visactor.io/vtable/option/ListTable-columns-text#fieldFormat]] function is used here, which accepts a JavaScript function that takes as its argument the entire tiddler fields object, we use [ext[Destructuring assignment|https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment]] to get the text of the `caption` field from it. In the function we use the Tiddlywiki JavaScript API [ext[$tw.wiki.renderText|https://tiddly-gittly.github.io/TW5-Typed/api/classes/core.Wiki#rendertext]] to render it as wikitext, so the transclusion taking effect.
+
+<$codeblock code={{examples/BasicTableCaptionTitle!!text}} />
+
+!! Basic table configured using JSON
+
+{{examples/BasicTableJSONConfig}}
+
+<$codeblock code={{examples/BasicTableJSONConfig!!text}} />
+
+!! Config line wrap with JSON options
+
+[[Read the Parameters Table|$:/plugins/linonetwo/hyper-table/ParametersTable]]
+
+To make specific columns wrap, we use the [[https://visactor.io/vtable/option/ListTable-columns-text#style]] 's [[https://visactor.io/vtable/option/ListTable-columns-text#style.autoWrapText]] configuration item. Study the source code for the ParametersTable:
+
+<$codeblock code={{$:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable}} />
+
+! Pivot Table
+
+Example based on [ext[https://visactor.io/vtable/demo/table-type/pivot-analysis-table]]
+
+{{examples/PivotTable}}
+
+<$codeblock code={{examples/PivotTable!!text}} />

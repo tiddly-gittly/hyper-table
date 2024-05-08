@@ -19,8 +19,6 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Readme
 
 !!! <<lingo ParametersTable/Caption>>
 
+微件上可以使用各种参数，你可以先在文档网站上查看用例，从例子中学习，或根据参数表自己拼凑参数。
+
 [[查看参数表|$:/plugins/linonetwo/hyper-table/ParametersTable]]
-
-也可以学习一下参数表的源代码：
-
-<$codeblock code={{$:/plugins/linonetwo/hyper-table/language/zh-Hans/ParametersTable}} />

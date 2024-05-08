@@ -1,37 +1,5 @@
 title: language/zh-Hans/Index
 
-!! 例子
+[[例子|Examples]]
 
-!!! 最简单的基本表格
-
-待实现
-
-!!! 使用筛选器获取数据的基本表格
-
-{{examples/BasicTableWithFilter}}
-
-可以点击 `title` 字段那一列，会打开相应的条目。
-
-注意，`caption` 字段和 `description` 字段是维基文本写的嵌入语法，表格微件会自动渲染它们的嵌入结果。
-
-<$codeblock code={{examples/BasicTableWithFilter!!text}} />
-
-!!! 在 title 字段展示 caption 字段的内容
-
-{{examples/BasicTableCaptionTitle}}
-
-<$codeblock code={{examples/BasicTableCaptionTitle!!text}} />
-
-!!! 使用 JSON 配置的基本表格
-
-{{examples/BasicTableJSONConfig}}
-
-<$codeblock code={{examples/BasicTableJSONConfig!!text}} />
-
-!!! 数据透视表
-
-例子基于 [ext[https://visactor.io/vtable/demo/table-type/pivot-analysis-table]]
-
-{{examples/PivotTable}}
-
-<$codeblock code={{examples/PivotTable!!text}} />
+[[排查问题|TroubleShooting]]

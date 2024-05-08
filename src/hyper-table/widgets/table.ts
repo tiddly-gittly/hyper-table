@@ -77,7 +77,8 @@ class ListTableWidget extends Widget {
     if (event.field === 'title') {
       this.dispatchEvent({
         type: 'tm-navigate',
-        navigateTo: event.value,
+        // `title` field on event.value maybe formatted using `fieldFormat` columns option, so we use `originData` to get the original value.
+        navigateTo: (event.originData as ITiddlerFields).title,
         navigateFromTitle: this.getVariable('currentTiddler'),
       });
     }

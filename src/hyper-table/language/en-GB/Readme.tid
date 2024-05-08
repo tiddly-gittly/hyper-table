@@ -19,8 +19,6 @@ This plugin provides several widgets:
 
 !!! <<lingo ParametersTable/Caption>>
 
+There are a variety of parameters that can be used on the Widget, and you can start by checking out the use cases on the documentation site to learn from the examples, or by piecing together your own parameters based on the parameter list.
+
 [[Read the Parameters Table|$:/plugins/linonetwo/hyper-table/ParametersTable]]
-
-See also source code of ParametersTable:
-
-<$codeblock code={{$:/plugins/linonetwo/hyper-table/language/en-GB/ParametersTable}} />

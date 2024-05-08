@@ -1,7 +1,7 @@
 title: examples/BasicTableWithFilter
 
 <$basic-table
-  height="200px"
-  filter="[all[shadows]tag[$:/tags/ViewToolbar]]"
-  columns="title|caption|description"
+  height="300px"
+  filter="[all[shadows]tag[$:/tags/EditorToolbar]]"
+  columns="title|caption|description|icon|condition|shortcuts"
 />
