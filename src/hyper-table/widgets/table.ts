@@ -63,7 +63,7 @@ class ListTableWidget extends Widget {
 
   protected getCommonOptions() {
     const widthMode = this.getAttribute('widthMode') as 'standard' | 'adaptive' | 'autoWidth' | undefined || 'standard';
-    const isDarkMode = $tw.wiki.getTiddler($tw.wiki.getTiddlerText('$:/palette') ?? '')?.fields?.['color-scheme'] === 'dark';
+    const isDarkMode = this.wiki.getTiddler(this.wiki.getTiddlerText('$:/palette') ?? '')?.fields?.['color-scheme'] === 'dark';
     const lightTheme = this.getAttribute('lightTheme') as 'DEFAULT' || 'DEFAULT';
     const darkTheme = this.getAttribute('darkTheme') as 'DARK' || 'DARK';
     return {
@@ -97,7 +97,7 @@ class ListTableWidget extends Widget {
     const recordsString = this.getAttribute('records')?.trim?.();
     let records: unknown[] | undefined = [];
     if (filter) {
-      records = this.wiki.filterTiddlers(filter).map((title) => $tw.wiki.getTiddler(title)?.fields).filter((item): item is ITiddlerFields => item !== undefined);
+      records = this.wiki.filterTiddlers(filter, this).map((title) => this.wiki.getTiddler(title)?.fields).filter((item): item is ITiddlerFields => item !== undefined);
     } else if (recordsString) {
       try {
         const parsedRecords = new Function(
@@ -135,7 +135,7 @@ class ListTableWidget extends Widget {
             title: field,
             width: 'auto',
             fieldFormat: (record: ITiddlerFields) => {
-              const renderedResult = $tw.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', String(record[field]), {
+              const renderedResult = this.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', String(record[field]), {
                 variables: { currentTiddler: record.title },
                 parentWidget: this,
               });
