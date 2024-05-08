@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
-import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes, TYPES } from '@visactor/vtable';
-import { IColumnDimension, IIndicator, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
+import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
+import { ColumnDefine, ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 
 class ListTableWidget extends Widget {
@@ -112,19 +112,36 @@ class ListTableWidget extends Widget {
     return records;
   }
 
-  private getListColumns(): TYPES.ColumnsDefine | undefined {
+  private getListColumns(): ColumnsDefine | undefined {
     const columnsString = this.getAttribute('columns')?.trim?.();
-    let columns: TYPES.ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
+    let columns: ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
     if (columnsString) {
       try {
         const parsedColumns = new Function(
           `return ${columnsString}`,
-        )() as TYPES.ColumnsDefine | undefined;
+        )() as ColumnsDefine | undefined;
         if (parsedColumns !== undefined) {
           columns = parsedColumns;
         }
       } catch (error) {
         console.error(`hyper-table list-table failed to parse columns\n\n${columnsString}`, error);
+      }
+      if (columnsString.includes('|')) {
+        columns = columnsString.split('|').map((field) =>
+          ({
+            cellType: 'text',
+            field,
+            title: field,
+            width: 'auto',
+            fieldFormat: (record: ITiddlerFields) => {
+              const renderedResult = $tw.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', String(record[field]), {
+                variables: { currentTiddler: record.title },
+                parentWidget: this,
+              });
+              return renderedResult;
+            },
+          }) satisfies ColumnDefine
+        );
       }
     }
     return columns;
@@ -163,7 +180,7 @@ class PivotTableWidget extends ListTableWidget {
       ...this.getCommonOptions(),
       records: this.getRecords(),
       columns: this.getPivotOption<IColumnDimension[]>('columns', ['tags']),
-      rows: this.getPivotOption<TYPES.IRowDimension[]>('rows', ['title']),
+      rows: this.getPivotOption<IRowDimension[]>('rows', ['title']),
       indicators: this.getPivotOption<IIndicator[]>('indicators', ['created', 'modified']),
       ...(this.getOtherOptionFromString() ?? {}) as PivotTableConstructorOptions,
     };
@@ -175,7 +192,7 @@ class PivotTableWidget extends ListTableWidget {
 
   private getPivotOption<T extends IIndicator[] | string[] | undefined>(field: string, defaultValue: string[]): T;
   private getPivotOption<T extends IColumnDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T;
-  private getPivotOption<T extends TYPES.IRowDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T {
+  private getPivotOption<T extends IRowDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T {
     const columnsString = this.getAttribute(field)?.trim?.();
     let columns = defaultValue as T;
     if (columnsString) {

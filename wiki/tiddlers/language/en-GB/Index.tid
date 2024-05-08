@@ -2,11 +2,25 @@ title: language/en-GB/Index
 
 !! Examples
 
-!!! Basic Table
+!!! The simplest basic table
 
-{{examples/BasicTable}}
+TBD
 
-<$codeblock code={{examples/BasicTable!!text}} />
+!!! Basic table with filtered tiddlers
+
+{{examples/BasicTableWithFilter}}
+
+You can click on the column for the `title` field, which will open the corresponding tiddler.
+
+Note that the `caption` field and the `description` field are transclusion syntax written in Wikitext, and Widget will automatically render their transclusion results.
+
+<$codeblock code={{examples/BasicTableWithFilter!!text}} />
+
+!!! Basic table configured using JSON
+
+{{examples/BasicTableJSONConfig}}
+
+<$codeblock code={{examples/BasicTableJSONConfig!!text}} />
 
 !!! Pivot Table
 

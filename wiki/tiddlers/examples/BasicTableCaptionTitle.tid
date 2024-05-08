@@ -1,0 +1,7 @@
+title: examples/BasicTableCaptionTitle
+
+<$basic-table
+  height="200px"
+  filter="[all[shadows]tag[$:/tags/ViewToolbar]]"
+  columns="title|caption|description"
+/>

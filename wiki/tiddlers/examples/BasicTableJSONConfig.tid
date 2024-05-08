@@ -1,4 +1,4 @@
-title: examples/BasicTable
+title: examples/BasicTableJSONConfig
 
 <$basic-table
   height="200px"

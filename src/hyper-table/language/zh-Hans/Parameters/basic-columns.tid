@@ -1,6 +1,6 @@
 title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/basic-columns
 tags: BasicTable
 field: columns
-description: 表格每一列的配置，每一列需要分别设置配置项，配置项根据cellType不同有略微差别，cellType可支持：'text' | 'link' | 'image' | 'video' | 'sparkline' | 'progressbar' | 'chart ，默认为 text
-example: [{ field: 'title', title: 'Title', width: 'auto' }]
+description: 表格每一列的配置，每一列需要分别设置配置项，配置项根据cellType不同有略微差别，cellType可支持：'text' | 'link' | 'image' | 'video' | 'sparkline' | 'progressbar' | 'chart ，默认为 text。也支持竖线 `|` 分隔的字段名这种简略写法。
+example: [{ field: 'title', title: 'Title', width: 'auto' }] 或 title|caption|description
 url: https://visactor.io/vtable/option/ListTable#columns
