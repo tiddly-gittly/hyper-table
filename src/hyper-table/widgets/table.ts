@@ -75,12 +75,17 @@ class ListTableWidget extends Widget {
 
   protected onTitleClickEvent(event: MousePointerCellEvent) {
     if (event.field === 'title') {
-      this.dispatchEvent({
-        type: 'tm-navigate',
-        // `title` field on event.value maybe formatted using `fieldFormat` columns option, so we use `originData` to get the original value.
-        navigateTo: (event.originData as ITiddlerFields).title,
-        navigateFromTitle: this.getVariable('currentTiddler'),
-      });
+      const originalTitle = (event.originData as ITiddlerFields | undefined)?.title ?? event.value as string;
+      if (originalTitle) {
+        this.dispatchEvent({
+          type: 'tm-navigate',
+          // `title` field on event.value maybe formatted using `fieldFormat` columns option, so we use `originData` to get the original value.
+          navigateTo: originalTitle,
+          navigateFromTitle: this.getVariable('currentTiddler'),
+        });
+      } else {
+        console.error('hyper-table list-table failed to get title field from event', event);
+      }
     }
   }
 
