@@ -129,6 +129,7 @@ class ListTableWidget extends Widget {
             field,
             title: field,
             width: 'auto',
+            sort: true,
             fieldFormat: (record: ITiddlerFields) => {
               const renderedResult = this.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', String(record[field]), {
                 variables: { currentTiddler: record.title },
