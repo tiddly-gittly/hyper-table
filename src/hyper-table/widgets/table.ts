@@ -117,16 +117,6 @@ class ListTableWidget extends Widget {
     const columnsString = this.getAttribute('columns')?.trim?.();
     let columns: ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
     if (columnsString) {
-      try {
-        const parsedColumns = new Function(
-          `return ${columnsString}`,
-        )() as ColumnsDefine | undefined;
-        if (parsedColumns !== undefined) {
-          columns = parsedColumns;
-        }
-      } catch (error) {
-        console.error(`hyper-table list-table failed to parse columns\n\n${columnsString}`, error);
-      }
       if (columnsString.includes('|')) {
         columns = columnsString.split('|').map((field) =>
           ({
@@ -143,6 +133,17 @@ class ListTableWidget extends Widget {
             },
           }) satisfies ColumnDefine
         );
+      } else {
+        try {
+          const parsedColumns = new Function(
+            `return ${columnsString}`,
+          )() as ColumnsDefine | undefined;
+          if (parsedColumns !== undefined) {
+            columns = parsedColumns;
+          }
+        } catch (error) {
+          console.error(`hyper-table list-table failed to parse columns\n\n${columnsString}`, error);
+        }
       }
     }
     return columns;
