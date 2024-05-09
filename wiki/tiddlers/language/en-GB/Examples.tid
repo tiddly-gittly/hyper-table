@@ -10,7 +10,7 @@ TBD
 
 {{examples/BasicTableWithFilter}}
 
-You can click on the column for the `title` field, which will open the corresponding tiddler.
+You can double-click on the column for the `title` field, which will open the corresponding tiddler.
 
 Note that the `caption` field and the `description` field are transclusion syntax written in Wikitext, and Widget will automatically render their transclusion results.
 

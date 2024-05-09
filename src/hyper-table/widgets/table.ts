@@ -41,7 +41,7 @@ class ListTableWidget extends Widget {
     this.tableInstance = new ListTable(option);
     const enableTitleFieldNavigate = this.getAttribute('titleNav') !== 'no';
     if (enableTitleFieldNavigate) {
-      this.tableInstance.on(ListTable.EVENT_TYPE.CLICK_CELL, this.onTitleClickEvent.bind(this));
+      this.tableInstance.on(ListTable.EVENT_TYPE.DBLCLICK_CELL, this.onTitleClickEvent.bind(this));
     }
 
     parent.insertBefore(containerElement, nextSibling);

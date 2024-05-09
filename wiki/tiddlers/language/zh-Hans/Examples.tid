@@ -10,7 +10,7 @@ title: language/zh-Hans/Examples
 
 {{examples/BasicTableWithFilter}}
 
-可以点击 `title` 字段那一列，会打开相应的条目。
+可以双击 `title` 字段那一列，会打开相应的条目。
 
 注意，`caption` 字段和 `description` 字段是维基文本写的嵌入语法，表格微件会自动渲染它们的嵌入结果。
 
