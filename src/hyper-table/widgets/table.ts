@@ -62,7 +62,7 @@ class ListTableWidget extends Widget {
   }
 
   protected getCommonOptions() {
-    const widthMode = this.getAttribute('widthMode') as 'standard' | 'adaptive' | 'autoWidth' | undefined || 'standard';
+    const widthMode = this.getAttribute('widthMode') as 'standard' | 'adaptive' | 'autoWidth' | undefined || 'adaptive';
     const isDarkMode = this.wiki.getTiddler(this.wiki.getTiddlerText('$:/palette') ?? '')?.fields?.['color-scheme'] === 'dark';
     const lightTheme = this.getAttribute('lightTheme') as 'DEFAULT' || 'DEFAULT';
     const darkTheme = this.getAttribute('darkTheme') as 'DARK' || 'DARK';
