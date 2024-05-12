@@ -131,7 +131,9 @@ class ListTableWidget extends Widget {
             width: 'auto',
             sort: true,
             fieldFormat: (record: ITiddlerFields) => {
-              const renderedResult = this.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', String(record[field]), {
+              // try render caption, if column is title.
+              const valueToRender = field === 'title' ? ((record.caption as string | undefined) || record.title) : String(record[field]);
+              const renderedResult = this.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', valueToRender, {
                 variables: { currentTiddler: record.title },
                 parentWidget: this,
               });
