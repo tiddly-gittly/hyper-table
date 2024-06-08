@@ -6,6 +6,7 @@ import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
 import { ColumnDefine, ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
+import { getFieldName } from '../utils/getFieldName';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -122,12 +123,13 @@ class ListTableWidget extends Widget {
     const columnsString = this.getAttribute('columns')?.trim?.();
     let columns: ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
     if (columnsString) {
-      if (columnsString.includes('|')) {
+      // JS version usually include using `=>` arrow function
+      if (columnsString.includes('|') && columnsString.includes('=>')) {
         columns = columnsString.split('|').map((field) =>
           ({
             cellType: 'text',
             field,
-            title: field,
+            title: getFieldName(field),
             width: 'auto',
             sort: true,
             fieldFormat: (record: ITiddlerFields) => {
@@ -142,12 +144,20 @@ class ListTableWidget extends Widget {
           }) satisfies ColumnDefine
         );
       } else {
+        // if is JS string, parse and execute it to get the config JSON
         try {
           const parsedColumns = new Function(
             `return ${columnsString}`,
           )() as ColumnsDefine | undefined;
           if (parsedColumns !== undefined) {
-            columns = parsedColumns;
+            columns = parsedColumns.map((column) => {
+              if (column.title !== undefined) {
+                column.title = getFieldName(typeof column.title === 'string' ? column.title : column.title());
+              } else if (column.field !== undefined) {
+                column.title = getFieldName(String(column.field));
+              }
+              return column;
+            });
           }
         } catch (error) {
           console.error(`hyper-table list-table failed to parse columns\n\n${columnsString}`, error);
