@@ -6,7 +6,7 @@ import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
 import { ColumnDefine, ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
-import { getFieldName } from '../utils/getFieldName';
+import { getEnumName, getFieldName } from '../utils/getFieldName';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -116,6 +116,13 @@ class ListTableWidget extends Widget {
         console.error(`hyper-table list-table failed to parse records\n\n${recordsString}`, error);
       }
     }
+    // translate
+    records = records.map((record) =>
+      Object.fromEntries(
+        Object.entries(record as ITiddlerFields)
+          .map(([key, value]) => [key, getEnumName(key, value)]),
+      )
+    );
     return records;
   }
 
