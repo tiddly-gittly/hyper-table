@@ -4,6 +4,6 @@
   "description": "Present large amounts of data beautifully and efficiently, generate pivot tables and other advanced table presentations for tiddlers.",
   "core-version": ">=5.1.22",
   "plugin-type": "plugin",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "list": "readme ParametersTable tree"
 }
