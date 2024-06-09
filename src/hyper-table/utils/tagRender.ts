@@ -1,11 +1,11 @@
-import { ColumnsDefine, CustomLayout } from '@visactor/vtable';
+import { ColumnsDefine, CustomLayout, MousePointerCellEvent } from '@visactor/vtable';
 import { INode } from '@visactor/vtable/es/vrender';
-import { ITiddlerFields } from 'tiddlywiki';
+import { ITiddlerFields, Widget } from 'tiddlywiki';
 
 /**
  * for `tags` field, use tag pill custom render
  */
-export function addTagRender(columns: ColumnsDefine): void {
+export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
   const currentPalette: Record<string, string> = $tw.wiki.getTiddlerData($tw.wiki.getTiddlerText('$:/palette') ?? '$:/palettes/Vanilla');
   columns.forEach((column) => {
     if (column.field === 'tags') {
@@ -23,9 +23,10 @@ export function addTagRender(columns: ColumnsDefine): void {
         });
         if (record.tags === undefined || record.tags.length === 0) return { renderDefault: true, rootContainer };
         for (let index = 0; index < record.tags.length; index++) {
-          const { backgroundColor, textColor } = getTagAndTextColor(record, currentPalette);
+          const tagTitle = record.tags[index];
+          const { backgroundColor, textColor } = getTagAndTextColor(tagTitle, currentPalette);
           const tag = new CustomLayout.Tag({
-            text: record.tags[index],
+            text: tagTitle,
             textStyle: {
               fontSize: 10,
               fontFamily: 'sans-serif',
@@ -39,6 +40,9 @@ export function addTagRender(columns: ColumnsDefine): void {
             space: 5,
             boundsPadding: 10,
           });
+          tag.addEventListener('dblclick', (event: MousePointerCellEvent) => {
+            onTagClickHandler(event, tagTitle, widget);
+          });
           rootContainer.add(tag as unknown as INode);
         }
         return { renderDefault: false, rootContainer };
@@ -47,10 +51,19 @@ export function addTagRender(columns: ColumnsDefine): void {
   });
 }
 
-function getTagAndTextColor(fields: ITiddlerFields, currentPalette: Record<string, string | undefined>) {
-  const { color, tags } = fields;
+function onTagClickHandler(event: MousePointerCellEvent, tagTitle: string, widget: Widget) {
+  widget.dispatchEvent({
+    type: 'tm-navigate',
+    navigateTo: tagTitle,
+    navigateFromTitle: widget.getVariable('currentTiddler'),
+  });
+}
 
-  const backgroundColor = color ?? tags?.map((tagName) => $tw.wiki.getTiddler(tagName)?.fields?.color).find(Boolean) ?? currentPalette['tag-background'];
+/**
+ * Similar to the `mapTiddlerFieldsToFullCalendarEventObject` in tw-calendar, but simplified to only use tag's color, not tiddler's color.
+ */
+function getTagAndTextColor(tagTitle: string, currentPalette: Record<string, string | undefined>) {
+  const backgroundColor = $tw.wiki.getTiddler(tagTitle)?.fields?.color ?? currentPalette['tag-background'];
   let textColor: string | undefined;
 
   if (backgroundColor !== undefined) {

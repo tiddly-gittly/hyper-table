@@ -172,7 +172,7 @@ class ListTableWidget extends Widget {
         }
       }
     }
-    addTagRender(columns);
+    addTagRender(columns, this);
     return columns;
   }
 
