@@ -7,6 +7,7 @@ import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstruct
 import { ColumnDefine, ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 import { getEnumName, getFieldName } from '../utils/getFieldName';
+import { addTagRender } from '../utils/tagRender';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -171,6 +172,7 @@ class ListTableWidget extends Widget {
         }
       }
     }
+    addTagRender(columns);
     return columns;
   }
 
