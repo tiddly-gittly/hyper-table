@@ -7,6 +7,7 @@ import { ITiddlerFields, Widget } from 'tiddlywiki';
  */
 export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
   const currentPalette: Record<string, string> = $tw.wiki.getTiddlerData($tw.wiki.getTiddlerText('$:/palette') ?? '$:/palettes/Vanilla');
+  const omitTags = widget.wiki.filterTiddlers(widget.getAttribute('omitTags') ?? '');
   columns.forEach((column) => {
     if (column.field === 'tags') {
       column.customLayout = (arguments_) => {
@@ -24,6 +25,7 @@ export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
         if (record.tags === undefined || record.tags.length === 0) return { renderDefault: true, rootContainer };
         for (let index = 0; index < record.tags.length; index++) {
           const tagTitle = record.tags[index];
+          if (omitTags.includes(tagTitle)) continue;
           const { backgroundColor, textColor } = getTagAndTextColor(tagTitle, currentPalette);
           const tag = new CustomLayout.Tag({
             text: tagTitle,

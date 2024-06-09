@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/omitTags
+tags: BasicTable
+field: omitTags
+description: 不展示标签
+example: 接受一个筛选器表达式，例如你在展示待办列表时，希望忽略 `任务` 标签，则可以传入 `[[任务]]` 这样的筛选器表达式。

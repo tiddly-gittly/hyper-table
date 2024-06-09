@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/omitTags
+tags: BasicTable
+field: omitTags
+description: Not displaying tags
+example: Accepts a filter expression, e.g. if you want to ignore the `Tasks` tag when displaying a to-do list, you can pass a filter expression like `[[Tasks]]`.
