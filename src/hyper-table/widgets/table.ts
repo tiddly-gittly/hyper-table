@@ -131,8 +131,8 @@ class ListTableWidget extends Widget {
     const columnsString = this.getAttribute('columns')?.trim?.();
     let columns: ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
     if (columnsString) {
-      // JS version usually include using `=>` arrow function
-      if (columnsString.includes('|') && columnsString.includes('=>')) {
+      // JS version usually include using `=>` arrow function. This simple version should not
+      if (columnsString.includes('|') && !columnsString.includes('=>')) {
         columns = columnsString.split('|').map((field) =>
           ({
             cellType: 'text',
