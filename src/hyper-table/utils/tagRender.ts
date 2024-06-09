@@ -1,4 +1,4 @@
-import { ColumnsDefine, CustomLayout, MousePointerCellEvent } from '@visactor/vtable';
+import { ColumnsDefine, CustomLayout } from '@visactor/vtable';
 import { INode } from '@visactor/vtable/es/vrender';
 import { ITiddlerFields, Widget } from 'tiddlywiki';
 
@@ -40,8 +40,8 @@ export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
             space: 5,
             boundsPadding: 10,
           });
-          tag.addEventListener('dblclick', (event: MousePointerCellEvent) => {
-            onTagClickHandler(event, tagTitle, widget);
+          tag.addEventListener('dblclick', () => {
+            onTagClickHandler(tagTitle, widget);
           });
           rootContainer.add(tag as unknown as INode);
         }
@@ -51,7 +51,7 @@ export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
   });
 }
 
-function onTagClickHandler(event: MousePointerCellEvent, tagTitle: string, widget: Widget) {
+function onTagClickHandler(tagTitle: string, widget: Widget) {
   widget.dispatchEvent({
     type: 'tm-navigate',
     navigateTo: tagTitle,

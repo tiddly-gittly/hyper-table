@@ -4,9 +4,12 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
-import { ColumnDefine, ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, MousePointerCellEvent } from '@visactor/vtable/es/ts-types';
+import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
-import { getEnumName, getFieldName } from '../utils/getFieldName';
+import { evalColumnJSString } from '../utils/evalColumnJSString';
+import { getEnumName } from '../utils/getFieldName';
+import { onCellClickEvent } from '../utils/onCellClickEvent';
+import { parseColumnShortcut } from '../utils/parseColumnShortcut';
 import { addTagRender } from '../utils/tagRender';
 
 class ListTableWidget extends Widget {
@@ -43,7 +46,9 @@ class ListTableWidget extends Widget {
     this.tableInstance = new ListTable(option);
     const enableTitleFieldNavigate = this.getAttribute('titleNav') !== 'no';
     if (enableTitleFieldNavigate) {
-      this.tableInstance.on(ListTable.EVENT_TYPE.DBLCLICK_CELL, this.onTitleClickEvent.bind(this));
+      this.tableInstance.on(ListTable.EVENT_TYPE.DBLCLICK_CELL, (event) => {
+        onCellClickEvent(event, this);
+      });
     }
 
     parent.insertBefore(containerElement, nextSibling);
@@ -73,22 +78,6 @@ class ListTableWidget extends Widget {
       // eslint-disable-next-line import/namespace
       theme: isDarkMode ? themes[darkTheme] : themes[lightTheme],
     };
-  }
-
-  protected onTitleClickEvent(event: MousePointerCellEvent) {
-    if (event.field === 'title') {
-      const originalTitle = (event.originData as ITiddlerFields | undefined)?.title ?? event.value as string;
-      if (originalTitle) {
-        this.dispatchEvent({
-          type: 'tm-navigate',
-          // `title` field on event.value maybe formatted using `fieldFormat` columns option, so we use `originData` to get the original value.
-          navigateTo: originalTitle,
-          navigateFromTitle: this.getVariable('currentTiddler'),
-        });
-      } else {
-        console.error('hyper-table list-table failed to get title field from event', event);
-      }
-    }
   }
 
   removeChildDomNodes(): void {
@@ -133,46 +122,14 @@ class ListTableWidget extends Widget {
     if (columnsString) {
       // JS version usually include using `=>` arrow function. This simple version should not
       if (columnsString.includes('|') && !columnsString.includes('=>')) {
-        columns = columnsString.split('|').map((field) =>
-          ({
-            cellType: 'text',
-            field,
-            title: getFieldName(field),
-            width: 'auto',
-            sort: true,
-            fieldFormat: (record: ITiddlerFields) => {
-              // try render caption, if column is title.
-              const valueToRender = field === 'title' ? ((record.caption as string | undefined) || record.title) : String(record[field]);
-              const renderedResult = this.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', valueToRender, {
-                variables: { currentTiddler: record.title },
-                parentWidget: this,
-              });
-              return renderedResult;
-            },
-          }) satisfies ColumnDefine
-        );
+        columns = parseColumnShortcut(columnsString, this);
       } else {
-        // if is JS string, parse and execute it to get the config JSON
-        try {
-          const parsedColumns = new Function(
-            `return ${columnsString}`,
-          )() as ColumnsDefine | undefined;
-          if (parsedColumns !== undefined) {
-            columns = parsedColumns.map((column) => {
-              if (column.title !== undefined) {
-                column.title = getFieldName(typeof column.title === 'string' ? column.title : column.title());
-              } else if (column.field !== undefined) {
-                column.title = getFieldName(String(column.field));
-              }
-              return column;
-            });
-          }
-        } catch (error) {
-          console.error(`hyper-table list-table failed to parse columns\n\n${columnsString}`, error);
-        }
+        columns = evalColumnJSString(columnsString);
       }
     }
-    addTagRender(columns, this);
+    if (columns !== undefined) {
+      addTagRender(columns, this);
+    }
     return columns;
   }
 
