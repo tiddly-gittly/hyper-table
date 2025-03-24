@@ -23,8 +23,9 @@ export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
           alignItems: 'center',
         });
         if (record.tags === undefined || record.tags.length === 0) return { renderDefault: true, rootContainer };
-        for (let index = 0; index < record.tags.length; index++) {
-          const tagTitle = record.tags[index];
+        const tags = Array.isArray(record.tags) ? record.tags : String(record.tags).split(',');
+        for (let index = 0; index < tags.length; index++) {
+          const tagTitle = tags[index];
           if (omitTags.includes(tagTitle)) continue;
           const { backgroundColor, textColor } = getTagAndTextColor(tagTitle, currentPalette);
           const tag = new CustomLayout.Tag({

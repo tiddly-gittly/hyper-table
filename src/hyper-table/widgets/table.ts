@@ -3,24 +3,16 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
-import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes, register } from '@visactor/vtable';
-import { DateInputEditor, InputEditor, ListEditor, TextAreaEditor } from '@visactor/vtable-editors';
-import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension } from '@visactor/vtable/es/ts-types';
+import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
+import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
 import { getEnumName } from '../utils/getFieldName';
 import { onCellClickEvent } from '../utils/onCellClickEvent';
 import { parseColumnShortcut } from '../utils/parseColumnShortcut';
 import { addTagRender } from '../utils/tagRender';
-
-const inputEditor = new InputEditor();
-const textAreaEditor = new TextAreaEditor();
-const dateInputEditor = new DateInputEditor();
-
-register.editor('text-editor', inputEditor);
-register.editor('textarea-editor', textAreaEditor);
-register.editor('date-editor', dateInputEditor);
-
+import { handleChangeCellValue } from '../utils/handleChangeCellValue';
+import { registerEditors } from '../utils/registerEditors';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -62,18 +54,21 @@ class ListTableWidget extends Widget {
     }
     const enableEdit = this.getAttribute('editable') === 'yes';
     if (enableEdit) {
-      this.tableInstance.on(ListTable.EVENT_TYPE.CHANGE_CELL_VALUE, (event) => {
-        const { col: columnIndex, row: rowIndex, changedValue } = event;
-        const record = this.tableInstance?.records?.[rowIndex - 1];
-        const columnKey = option.columns?.[columnIndex]?.field?.toString?.();
-        if (record?.title && typeof columnKey === 'string' && this.wiki.tiddlerExists(record.title)) {
-          this.wiki.setText(record.title, columnKey, undefined, String(changedValue));
-        }
-      });
+      registerEditors();
+      this.tableInstance.on(ListTable.EVENT_TYPE.CHANGE_CELL_VALUE, this.handleChangeCellValue.bind(this));
     }
 
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
+  }
+
+  private handleChangeCellValue(event: TableEventHandlersEventArgumentMap[typeof ListTable.EVENT_TYPE.CHANGE_CELL_VALUE]) {
+    const { col: columnIndex, row: rowIndex, changedValue, currentValue } = event;
+    const record = this.tableInstance?.records?.[rowIndex - 1];
+    const columnKey = this.getListColumns()?.[columnIndex]?.field?.toString?.();
+    if (record?.title && typeof columnKey === 'string' && this.wiki.tiddlerExists(record.title)) {
+      handleChangeCellValue(record.title, columnKey, changedValue, currentValue);
+    }
   }
 
   protected getContainerElement() {

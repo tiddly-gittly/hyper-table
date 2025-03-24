@@ -5,14 +5,21 @@ import { ITiddlerFields, Widget } from 'tiddlywiki';
 import { getFieldName } from './getFieldName';
 
 export function parseColumnShortcut(columnsString: string, widget: Widget, options?: {editable?: boolean}) {
-  return columnsString.split('|').map((field) =>
-    ({
+  return columnsString.split('|').map((field) => {
+    let editor: string | undefined;
+    if (options?.editable) {
+      // TODO: add other editor types, register them in `src/hyper-table/utils/registerEditors.ts`
+      if (field !== 'title') {
+        editor = 'text-editor';
+      }
+    }
+    return {
       cellType: 'text',
       field,
       title: getFieldName(field),
       width: 'auto',
       sort: true,
-      editor: (options?.editable && field !== 'title') ? 'text-editor' : undefined,
+      editor,
       fieldFormat: (record: ITiddlerFields) => {
         // try render caption, if column is title.
         const valueToRender = field === 'title' ? ((record.caption as string | undefined) || record.title) : String(record[field]);
@@ -22,6 +29,6 @@ export function parseColumnShortcut(columnsString: string, widget: Widget, optio
         });
         return renderedResult;
       },
-    }) satisfies ColumnDefine
-  );
+    } satisfies ColumnDefine;
+  });
 }
