@@ -4,6 +4,7 @@
   "version": "0.0.2",
   "scripts": {
     "dev": "tiddlywiki-plugin-dev dev",
+    "dev:lan": "tiddlywiki-plugin-dev dev --lan",
     "dev:wiki": "tiddlywiki-plugin-dev dev --write-wiki",
     "test": "tiddlywiki-plugin-dev test",
     "build": "npm run clean && tiddlywiki-plugin-dev build",
@@ -11,13 +12,13 @@
     "reset": "rimraf ./**/node_modules",
     "clean": "rimraf dist",
     "prepare": "husky install",
-    "update": "npm-check-updates -u",
+    "update": "npm-check-updates -u && dprint config update",
     "new": "tiddlywiki-plugin-dev new",
     "build:library": "npm run clean && tiddlywiki-plugin-dev build --library --output dist/library",
     "publish:offline": "npm run clean && tiddlywiki-plugin-dev publish --offline"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=20"
   },
   "husky": {
     "hooks": {
@@ -33,24 +34,32 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "^2.52.0",
-    "@types/jasmine": "^5.1.4",
+    "@modern-js/tsconfig": "^2.65.5",
+    "@types/jasmine": "^5.1.7",
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^20.14.2",
-    "dprint": "^0.46.2",
+    "@types/node": "^22.13.12",
+    "dprint": "^0.49.1",
     "eslint-config-tidgi": "^1.2.3",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.5",
-    "postcss": "^8.4.38",
-    "rimraf": "^5.0.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "postcss": "^8.5.3",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
-    "tw5-typed": "^0.5.11",
-    "typescript": "^5.4.5"
+    "tw5-typed": "^0.5.14",
+    "typescript": "^5.8.2"
   },
   "dependencies": {
-    "@visactor/vtable": "^1.2.0",
-    "npm-check-updates": "^16.14.20",
-    "tiddlywiki": "^5.3.3",
-    "tiddlywiki-plugin-dev": "^0.2.1"
+    "@visactor/vtable": "^1.17.3",
+    "npm-check-updates": "^17.1.16",
+    "tiddlywiki": "^5.3.6",
+    "tiddlywiki-plugin-dev": "^0.3.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "dprint",
+      "esbuild",
+      "svelte-preprocess"
+    ]
   }
 }
