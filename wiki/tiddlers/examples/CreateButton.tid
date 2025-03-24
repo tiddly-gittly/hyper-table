@@ -1,0 +1,9 @@
+title: examples/CreateButton
+
+\procedure create-item()
+<$action-createtiddler $basetitle={{$:/language/DefaultNewTiddlerTitle}} tags="task"/>
+\end
+
+<$button actions=<<create-item>> >
++
+</$button>

@@ -24,6 +24,14 @@ Add `editable="yes"` to make the table editable, double-click on a cell to edit 
 
 <$codeblock code={{examples/BasicTableWithFilterEdit!!text}} />
 
+!!! Add a create button
+
+Use the Button widget from the Tiddlywiki core, see its `actions` usage, see [ext[official documentation|https://tiddlywiki.com/#ActionCreateTiddlerWidget:ActionCreateTiddlerWidget%20ButtonWidget]] .
+
+{{examples/CreateButton}}
+
+<$codeblock code={{examples/CreateButton!!text}} />
+
 !! Displaying the content of the caption field in the title field
 
 {{examples/BasicTableCaptionTitle}}

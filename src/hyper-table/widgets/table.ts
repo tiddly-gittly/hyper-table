@@ -16,12 +16,29 @@ import { registerEditors } from '../utils/registerEditors';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
+  previousFilterResult: string[] = [];
 
-  refresh(_changedTiddlers: IChangedTiddlers) {
+  refresh(changedTiddlers: IChangedTiddlers) {
     const changedAttributes = this.computeAttributes();
     if ($tw.utils.count(changedAttributes) > 0) {
       this.refreshSelf();
       return true;
+    }
+    const filter = this.getAttribute('filter');
+    if (filter) {
+      const modified = Object.keys(changedTiddlers).filter((title) => changedTiddlers[title].modified);
+      if (modified.length > 0) {
+        const results = this.wiki.filterTiddlers(filter, this);
+        if (results.length > 0 && modified.some((title) => results.includes(title))) {
+          this.refreshSelf();
+          return true;
+        }
+      }
+      const deleted = Object.keys(changedTiddlers).filter((title) => changedTiddlers[title].deleted);
+      if (deleted.length > 0 && deleted.some((title) => this.previousFilterResult.includes(title))) {
+        this.refreshSelf();
+        return true;
+      }
     }
     return false;
   }
@@ -93,6 +110,12 @@ class ListTableWidget extends Widget {
       widthMode,
       // eslint-disable-next-line import/namespace
       theme: isDarkMode ? themes[darkTheme] : themes[lightTheme],
+      sortState: [
+        {
+          field: 'modified',
+          order: 'desc'
+        },
+      ],
     };
   }
 
@@ -109,7 +132,9 @@ class ListTableWidget extends Widget {
     const recordsString = this.getAttribute('records')?.trim?.();
     let records: unknown[] | undefined = [];
     if (filter) {
-      records = this.wiki.filterTiddlers(filter, this).map((title) => this.wiki.getTiddler(title)?.fields).filter((item): item is ITiddlerFields => item !== undefined);
+      const filteredTitles = this.wiki.filterTiddlers(filter, this);
+      this.previousFilterResult = filteredTitles;
+      records = filteredTitles.map((title) => this.wiki.getTiddler(title)?.fields).filter((item): item is ITiddlerFields => item !== undefined);
     } else if (recordsString) {
       try {
         const parsedRecords = new Function(
