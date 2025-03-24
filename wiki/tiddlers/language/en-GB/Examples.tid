@@ -6,8 +6,6 @@ title: language/en-GB/Examples
 
 {{examples/SimpleTable}}
 
-<$codeblock code={{examples/SimpleTable!!text}} />
-
 !! Basic table with filtered tiddlers
 
 {{examples/BasicTableWithFilter}}
@@ -16,7 +14,7 @@ You can double-click on the column for the `title` field, which will open the co
 
 Note that the `caption` field and the `description` field are transclusion syntax written in Wikitext, and Widget will automatically render their transclusion results.
 
-<$codeblock code={{examples/BasicTableWithFilter!!text}} />
+<$edit-text tiddler="examples/BasicTableWithFilter" class="tc-edit-texteditor"/>
 
 !! Editable filtered table
 
@@ -24,7 +22,7 @@ Add `editable="yes"` to make the table editable, double-click on a cell to edit 
 
 {{examples/BasicTableWithFilterEdit}}
 
-<$codeblock code={{examples/BasicTableWithFilterEdit!!text}} />
+<$edit-text tiddler="examples/BasicTableWithFilterEdit" class="tc-edit-texteditor"/>
 
 !!! Add a create button
 
@@ -32,7 +30,7 @@ Use the Button widget from the Tiddlywiki core, see its `actions` usage, see [ex
 
 {{examples/CreateButton}}
 
-<$codeblock code={{examples/CreateButton!!text}} />
+<$edit-text tiddler="examples/CreateButton" class="tc-edit-texteditor"/>
 
 !! Displaying the content of the caption field in the title field
 
@@ -40,13 +38,13 @@ Use the Button widget from the Tiddlywiki core, see its `actions` usage, see [ex
 
 The [ext[fieldFormat|https://visactor.io/vtable/option/ListTable-columns-text#fieldFormat]] function is used here, which accepts a JavaScript function that takes as its argument the entire tiddler fields object, we use [ext[Destructuring assignment|https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment]] to get the text of the `caption` field from it. In the function we use the Tiddlywiki JavaScript API [ext[$tw.wiki.renderText|https://tiddly-gittly.github.io/TW5-Typed/api/classes/core.Wiki#rendertext]] to render it as wikitext, so the transclusion taking effect.
 
-<$codeblock code={{examples/BasicTableCaptionTitle!!text}} />
+<$edit-text tiddler="examples/BasicTableCaptionTitle" class="tc-edit-texteditor"/>
 
 !! Basic table configured using JSON
 
 {{examples/BasicTableJSONConfig}}
 
-<$codeblock code={{examples/BasicTableJSONConfig!!text}} />
+<$edit-text tiddler="examples/BasicTableJSONConfig" class="tc-edit-texteditor"/>
 
 !! Config line wrap with JSON options
 
@@ -62,4 +60,4 @@ Example based on [ext[https://visactor.io/vtable/demo/table-type/pivot-analysis-
 
 {{examples/PivotTable}}
 
-<$codeblock code={{examples/PivotTable!!text}} />
+<$edit-text tiddler="examples/PivotTable" class="tc-edit-texteditor"/>

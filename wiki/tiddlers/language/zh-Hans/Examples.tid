@@ -6,8 +6,6 @@ title: language/zh-Hans/Examples
 
 {{examples/SimpleTable}}
 
-<$codeblock code={{examples/SimpleTable!!text}} />
-
 !! 使用筛选器获取数据的基本表格
 
 {{examples/BasicTableWithFilter}}
@@ -16,7 +14,7 @@ title: language/zh-Hans/Examples
 
 注意，`caption` 字段和 `description` 字段是维基文本写的嵌入语法，表格微件会自动渲染它们的嵌入结果。
 
-<$codeblock code={{examples/BasicTableWithFilter!!text}} />
+<$edit-text tiddler="examples/BasicTableWithFilter" class="tc-edit-texteditor"/>
 
 !! 编辑筛选器表格
 
@@ -24,7 +22,7 @@ title: language/zh-Hans/Examples
 
 {{examples/BasicTableWithFilterEdit}}
 
-<$codeblock code={{examples/BasicTableWithFilterEdit!!text}} />
+<$edit-text tiddler="examples/BasicTableWithFilterEdit" class="tc-edit-texteditor"/>
 
 !!! 添加创建按钮
 
@@ -32,7 +30,7 @@ title: language/zh-Hans/Examples
 
 {{examples/CreateButton}}
 
-<$codeblock code={{examples/CreateButton!!text}} />
+<$edit-text tiddler="examples/CreateButton" class="tc-edit-texteditor"/>
 
 !! 在 title 字段展示 caption 字段的内容
 
@@ -40,13 +38,13 @@ title: language/zh-Hans/Examples
 
 这里使用了 [ext[fieldFormat|https://visactor.io/vtable/option/ListTable-columns-text#fieldFormat]] 功能，它接受一个 JavaScript 函数，这个函数获得的参数是整个条目字段对象，我们使用[ext[解构赋值语法|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment]]获得其中的 `caption` 字段的文本，在函数里我们使用了太微的 JavaScript API [ext[$tw.wiki.renderText|https://tiddly-gittly.github.io/TW5-Typed/api/classes/core.Wiki#rendertext]] 将它渲染为嵌入生效后的结果。
 
-<$codeblock code={{examples/BasicTableCaptionTitle!!text}} />
+<$edit-text tiddler="examples/BasicTableCaptionTitle" class="tc-edit-texteditor"/>
 
 !! 使用 JSON 配置的基本表格
 
 {{examples/BasicTableJSONConfig}}
 
-<$codeblock code={{examples/BasicTableJSONConfig!!text}} />
+<$edit-text tiddler="examples/BasicTableJSONConfig" class="tc-edit-texteditor"/>
 
 !! 使用 JSON 配置换行
 
@@ -62,4 +60,4 @@ title: language/zh-Hans/Examples
 
 {{examples/PivotTable}}
 
-<$codeblock code={{examples/PivotTable!!text}} />
+<$edit-text tiddler="examples/PivotTable" class="tc-edit-texteditor"/>
