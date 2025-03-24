@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@visactor/vtable": "^1.17.3",
+    "@visactor/vtable-editors": "^1.17.3",
     "npm-check-updates": "^17.1.16",
     "tiddlywiki": "^5.3.6",
     "tiddlywiki-plugin-dev": "^0.3.2"

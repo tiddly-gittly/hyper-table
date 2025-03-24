@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
-import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
+import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes, register } from '@visactor/vtable';
+import { DateInputEditor, InputEditor, ListEditor, TextAreaEditor } from '@visactor/vtable-editors';
 import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
@@ -11,6 +12,15 @@ import { getEnumName } from '../utils/getFieldName';
 import { onCellClickEvent } from '../utils/onCellClickEvent';
 import { parseColumnShortcut } from '../utils/parseColumnShortcut';
 import { addTagRender } from '../utils/tagRender';
+
+const inputEditor = new InputEditor();
+const textAreaEditor = new TextAreaEditor();
+const dateInputEditor = new DateInputEditor();
+
+register.editor('text-editor', inputEditor);
+register.editor('textarea-editor', textAreaEditor);
+register.editor('date-editor', dateInputEditor);
+
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -48,6 +58,17 @@ class ListTableWidget extends Widget {
     if (enableTitleFieldNavigate) {
       this.tableInstance.on(ListTable.EVENT_TYPE.DBLCLICK_CELL, (event) => {
         onCellClickEvent(event, this);
+      });
+    }
+    const enableEdit = this.getAttribute('editable') === 'yes';
+    if (enableEdit) {
+      this.tableInstance.on(ListTable.EVENT_TYPE.CHANGE_CELL_VALUE, (event) => {
+        const { col: columnIndex, row: rowIndex, changedValue } = event;
+        const record = this.tableInstance?.records?.[rowIndex - 1];
+        const columnKey = option.columns?.[columnIndex]?.field?.toString?.();
+        if (record?.title && typeof columnKey === 'string' && this.wiki.tiddlerExists(record.title)) {
+          this.wiki.setText(record.title, columnKey, undefined, String(changedValue));
+        }
       });
     }
 
@@ -122,7 +143,8 @@ class ListTableWidget extends Widget {
     if (columnsString) {
       // JS version usually include using `=>` arrow function. This simple version should not
       if (columnsString.includes('|') && !columnsString.includes('=>')) {
-        columns = parseColumnShortcut(columnsString, this);
+        const editable = this.getAttribute('editable') === 'yes';
+        columns = parseColumnShortcut(columnsString, this, { editable });
       } else {
         columns = evalColumnJSString(columnsString);
       }
