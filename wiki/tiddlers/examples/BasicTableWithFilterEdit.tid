@@ -1,0 +1,8 @@
+title: examples/BasicTableWithFilterEdit
+
+<$basic-table
+  height="300px"
+  filter="[all[tiddlers]tag[task]]"
+  columns="title|description|icon|text|priority|status"
+  editable="yes"
+/>

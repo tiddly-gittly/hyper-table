@@ -16,6 +16,14 @@ title: language/zh-Hans/Examples
 
 <$codeblock code={{examples/BasicTableWithFilter!!text}} />
 
+!! 编辑筛选器表格
+
+添加 `editable="yes"` 即可让表格可编辑，双击单元格即可编辑除标题外的所有字段。（如上面所述，双击标题字段会打开相应的条目。）
+
+{{examples/BasicTableWithFilterEdit}}
+
+<$codeblock code={{examples/BasicTableWithFilterEdit!!text}} />
+
 !! 在 title 字段展示 caption 字段的内容
 
 {{examples/BasicTableCaptionTitle}}

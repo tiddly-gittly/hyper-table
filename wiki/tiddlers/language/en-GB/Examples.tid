@@ -16,6 +16,14 @@ Note that the `caption` field and the `description` field are transclusion synta
 
 <$codeblock code={{examples/BasicTableWithFilter!!text}} />
 
+!! Editable filtered table
+
+Add `editable="yes"` to make the table editable, double-click on a cell to edit it except for the title field. (As said above, double-clicking the title field will open the corresponding tiddler)
+
+{{examples/BasicTableWithFilterEdit}}
+
+<$codeblock code={{examples/BasicTableWithFilterEdit!!text}} />
+
 !! Displaying the content of the caption field in the title field
 
 {{examples/BasicTableCaptionTitle}}
