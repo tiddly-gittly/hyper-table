@@ -59,7 +59,7 @@ export function getEnumName(field: string, enumName: unknown): string {
     return enumName;
   }
   if (cachedEnumTranslation[field]?.[enumName] !== undefined) {
-    return cachedEnumTranslation[field]![enumName] ?? enumName;
+    return cachedEnumTranslation[field][enumName] ?? enumName;
   }
   if (traitTagSchemas === undefined) {
     traitTagSchemas = getSchemas();
@@ -86,7 +86,7 @@ export function getEnumName(field: string, enumName: unknown): string {
         if (cachedEnumTranslation[field] === undefined) {
           cachedEnumTranslation[field] = {};
         }
-        cachedEnumTranslation[field]![enumName] = translation;
+        cachedEnumTranslation[field][enumName] = translation;
         return translation;
       }
     }
@@ -94,6 +94,6 @@ export function getEnumName(field: string, enumName: unknown): string {
   if (cachedEnumTranslation[field] === undefined) {
     cachedEnumTranslation[field] = {};
   }
-  cachedEnumTranslation[field]![enumName] = null;
+  cachedEnumTranslation[field][enumName] = null;
   return enumName;
 }

@@ -1,7 +1,8 @@
 export function handleChangeCellValue(title: string, field: string, changedValue: string | number, currentValue: unknown) {
   if (changedValue === currentValue) return;
   if (typeof currentValue === 'string' || currentValue === undefined || typeof currentValue === 'number') {
-    return $tw.wiki.setText(title, field, undefined, String(changedValue));
+    $tw.wiki.setText(title, field, undefined, String(changedValue));
+    return;
   }
   if (Array.isArray(currentValue)) {
     const tiddlerFields = $tw.wiki.getTiddler(title)?.fields;
@@ -9,5 +10,4 @@ export function handleChangeCellValue(title: string, field: string, changedValue
     const newFields = { ...tiddlerFields, [field]: String(changedValue).split(',') };
     $tw.wiki.addTiddler(newFields);
   }
-
 }

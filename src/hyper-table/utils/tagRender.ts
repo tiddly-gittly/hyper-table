@@ -24,8 +24,7 @@ export function addTagRender(columns: ColumnsDefine, widget: Widget): void {
         });
         if (record.tags === undefined || record.tags.length === 0) return { renderDefault: true, rootContainer };
         const tags = Array.isArray(record.tags) ? record.tags : String(record.tags).split(',');
-        for (let index = 0; index < tags.length; index++) {
-          const tagTitle = tags[index];
+        for (const tagTitle of tags) {
           if (omitTags.includes(tagTitle)) continue;
           const { backgroundColor, textColor } = getTagAndTextColor(tagTitle, currentPalette);
           const tag = new CustomLayout.Tag({

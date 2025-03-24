@@ -1,4 +1,4 @@
-import { Widget, ITiddlerFields } from "tiddlywiki";
+import { ITiddlerFields, Widget } from 'tiddlywiki';
 
 export function getTextFieldFormat(field: string, widget: Widget): (record: ITiddlerFields) => string {
   return (record: ITiddlerFields) => {
@@ -9,5 +9,5 @@ export function getTextFieldFormat(field: string, widget: Widget): (record: ITid
       parentWidget: widget,
     });
     return renderedResult;
-  }
+  };
 }

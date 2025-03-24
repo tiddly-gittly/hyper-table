@@ -4,15 +4,15 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
-import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
+import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
 import { getEnumName } from '../utils/getFieldName';
+import { handleChangeCellValue } from '../utils/handleChangeCellValue';
 import { onCellClickEvent } from '../utils/onCellClickEvent';
 import { parseColumnShortcut } from '../utils/parseColumnShortcut';
-import { addTagRender } from '../utils/tagRender';
-import { handleChangeCellValue } from '../utils/handleChangeCellValue';
 import { registerEditors } from '../utils/registerEditors';
+import { addTagRender } from '../utils/tagRender';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -35,7 +35,7 @@ class ListTableWidget extends Widget {
         }
       }
       const deleted = Object.keys(changedTiddlers).filter((title) => changedTiddlers[title].deleted);
-      if (deleted.length > 0 && deleted.some((title) => this.previousFilterResult.includes(title))) {
+      if (deleted.some((title) => this.previousFilterResult.includes(title))) {
         this.refreshSelf();
         return true;
       }
@@ -60,6 +60,7 @@ class ListTableWidget extends Widget {
       ...this.getCommonOptions(),
       records: this.getRecords(),
       columns: this.getListColumns(),
+      ...this.getSortOptions(),
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
     this.tableInstance = new ListTable(option);
@@ -106,17 +107,22 @@ class ListTableWidget extends Widget {
     const isDarkMode = this.wiki.getTiddler(this.wiki.getTiddlerText('$:/palette') ?? '')?.fields?.['color-scheme'] === 'dark';
     const lightTheme = this.getAttribute('lightTheme') as 'DEFAULT' || 'DEFAULT';
     const darkTheme = this.getAttribute('darkTheme') as 'DARK' || 'DARK';
-    const sort = this.getAttribute('sort', 'modified');
     return {
       widthMode,
       // eslint-disable-next-line import/namespace
       theme: isDarkMode ? themes[darkTheme] : themes[lightTheme],
-      sortState: sort !== 'no' ? [
+    };
+  }
+
+  private getSortOptions(): Partial<ListTableConstructorOptions> {
+    const sort = this.getAttribute('sort');
+    return {
+      sortState: sort === 'no' ? undefined : [
         {
           field: sort,
-          order: 'desc'
+          order: 'desc',
         },
-      ] : undefined,
+      ] as SortState[],
     };
   }
 

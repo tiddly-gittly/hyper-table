@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { ColumnDefine } from '@visactor/vtable';
-import { ITiddlerFields, Widget } from 'tiddlywiki';
-import { getFieldName } from './getFieldName';
+import { Widget } from 'tiddlywiki';
 import { getTextFieldFormat } from './getFieldFormat';
+import { getFieldName } from './getFieldName';
 
-export function parseColumnShortcut(columnsString: string, widget: Widget, options?: {editable?: boolean}) {
+export function parseColumnShortcut(columnsString: string, widget: Widget, options?: { editable?: boolean }) {
   return columnsString.split('|').map((field) => {
     let editor: string | undefined;
-    if (options?.editable) {
-      // TODO: add other editor types, register them in `src/hyper-table/utils/registerEditors.ts`
-      if (field !== 'title') {
-        editor = 'text-editor';
-      }
+    if (
+      options?.editable && // TODO: add other editor types, register them in `src/hyper-table/utils/registerEditors.ts`
+      field !== 'title'
+    ) {
+      editor = 'text-editor';
     }
     return {
       cellType: 'text',
