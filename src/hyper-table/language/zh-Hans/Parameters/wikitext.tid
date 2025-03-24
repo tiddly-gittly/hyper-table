@@ -1,5 +1,0 @@
-title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/wikitext
-tags: BasicTable
-field: wikitext
-description: 用 WikiText 格式写的表格，可以用 `"""` 包裹，以便写成多行字符串。会覆盖其他 `records` 和 `columns` 字段。
-example: 详见太微官方文档里的表格语法介绍

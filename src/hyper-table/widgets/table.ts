@@ -6,7 +6,7 @@ import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
 import { SearchComponent } from '@visactor/vtable-search';
 import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
-import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
+import { IChangedTiddlers, ITextParseTreeNode, ITiddlerFields, IWikiASTNode } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
 import { getEnumName } from '../utils/getFieldName';
 import { handleChangeCellValue } from '../utils/handleChangeCellValue';
@@ -75,9 +75,9 @@ class ListTableWidget extends Widget {
   }
 
   protected getRecordsAndColumns() {
-    const wikiTextTable = this.getAttribute('wikitext');
-    if (wikiTextTable) {
-      const parsedTable = parseWikiTextTable(wikiTextTable);
+    const child = (this.parseTreeNode as IWikiASTNode).children?.[0];
+    if (child?.type === 'text') {
+      const parsedTable = parseWikiTextTable((child as ITextParseTreeNode).text);
       if (parsedTable) {
         return parsedTable;
       }
