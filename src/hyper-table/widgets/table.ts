@@ -138,7 +138,7 @@ class ListTableWidget extends Widget {
   }
 
   private getSortOptions(): Partial<ListTableConstructorOptions> {
-    const sort = this.getAttribute('sort');
+    const sort = this.getAttribute('sort', 'modified');
     return {
       sortState: sort === 'no' ? undefined : [
         {
