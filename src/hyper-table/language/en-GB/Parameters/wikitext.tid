@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/wikitext
+tags: BasicTable
+field: wikitext
+description: A table written in WikiText format, which can be wrapped in `"""` to write as a multi-line string. Will override other `records` and `columns` fields.
+example: See the table syntax introduction in the official TiddlyWiki documentation

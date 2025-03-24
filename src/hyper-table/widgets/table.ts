@@ -17,6 +17,7 @@ import { searchBar } from '../utils/searchBar';
 import { addTagRender } from '../utils/tagRender';
 
 import './style.css';
+import { parseWikiTextTable } from '../utils/wikiTextTable';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -62,8 +63,7 @@ class ListTableWidget extends Widget {
         moveFocusCellOnTab: true,
       },
       ...this.getCommonOptions(),
-      records: this.getRecords(),
-      columns: this.getListColumns(),
+      ...this.getRecordsAndColumns(),
       ...this.getSortOptions(),
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
@@ -72,6 +72,21 @@ class ListTableWidget extends Widget {
 
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
+  }
+
+  protected getRecordsAndColumns() {
+    const wikiTextTable = this.getAttribute('wikitext');
+    if (wikiTextTable) {
+      const parsedTable = parseWikiTextTable(wikiTextTable);
+      if (parsedTable) {
+        return parsedTable;
+      }
+    }
+
+    return {
+      records: this.getRecords(),
+      columns: this.getListColumns(),
+    };
   }
 
   protected additionalFeatures(containerElement: HTMLElement) {

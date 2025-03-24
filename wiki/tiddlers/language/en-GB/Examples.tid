@@ -4,7 +4,9 @@ title: language/en-GB/Examples
 
 !! The simplest basic table
 
-TBD
+{{examples/SimpleTable}}
+
+<$codeblock code={{examples/SimpleTable!!text}} />
 
 !! Basic table with filtered tiddlers
 

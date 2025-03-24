@@ -8,7 +8,7 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
 
   const input = $tw.utils.domMaker('input', {
     class: 'tc-hyper-table-search-input',
-    attributes: { tabindex: '0' }
+    attributes: { tabindex: '0' },
   });
   searchContainer.append(input);
 

@@ -1,0 +1,8 @@
+title: examples/SimpleTable
+
+<$basic-table
+  wikitext="""|!Cell1 |!Cell2 |
+|Cell3 |Cell4 |"""
+  height="100px"
+  search="search-bar"
+/>

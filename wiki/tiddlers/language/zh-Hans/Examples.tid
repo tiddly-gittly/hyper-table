@@ -4,7 +4,9 @@ title: language/zh-Hans/Examples
 
 !! 最简单的基本表格
 
-待实现
+{{examples/SimpleTable}}
+
+<$codeblock code={{examples/SimpleTable!!text}} />
 
 !! 使用筛选器获取数据的基本表格
 
