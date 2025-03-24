@@ -1,5 +1,5 @@
 title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/titleNav
-tags: BasicTable
+tags: BasicTable PivotTable
 field: titleNav
 description: Enabled by default, for `title` fields, when clicked, jumps to the corresponding tiddler
 example: yes no

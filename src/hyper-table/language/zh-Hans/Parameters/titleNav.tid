@@ -1,5 +1,5 @@
 title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/titleNav
-tags: BasicTable
+tags: BasicTable PivotTable
 field: titleNav
 description: 默认启用，对于 title 字段，点击时跳转到相应条目
 example: yes no

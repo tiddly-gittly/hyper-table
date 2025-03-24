@@ -1,0 +1,29 @@
+.tc-hyper-table-search-container {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tc-hyper-table-search-input {
+  padding: 5px;
+  border-radius: 4px;
+  flex-grow: 1;
+}
+
+.tc-hyper-table-search-btn,
+.tc-hyper-table-next-btn,
+.tc-hyper-table-prev-btn {
+  padding: 5px 10px;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tc-hyper-table-search-result-count {
+  margin-left: 10px;
+  font-weight: bold;
+}

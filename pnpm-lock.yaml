@@ -14,6 +14,9 @@ importers:
       '@visactor/vtable-editors':
         specifier: ^1.17.3
         version: 1.17.3
+      '@visactor/vtable-search':
+        specifier: ^1.17.3
+        version: 1.17.3
       npm-check-updates:
         specifier: ^17.1.16
         version: 17.1.16
@@ -838,6 +841,9 @@ packages:
 
   '@visactor/vtable-editors@1.17.3':
     resolution: {integrity: sha512-HNWxpFlH92oX8hoBQ9SN0GuvnYBSAT/R1Q0RnUPjdlBFyFilGVRESwHHowkwkiyeEZNlYfenTuq+VwBI7VBn+w==}
+
+  '@visactor/vtable-search@1.17.3':
+    resolution: {integrity: sha512-L73AG6txvEpRyy5nJ9QLkSaKdKdL9upQjiVA3yW4HJDKp6kEjlMUxE1MuyactFW6YnVyKLJYzlbxB217ZBBOsQ==}
 
   '@visactor/vtable@1.17.3':
     resolution: {integrity: sha512-qEvggZKRpTLWLIvxK3h7cKzGMoAUB548zmv/H0wSJplDjuoQoUiSU4JtmruNU1JC7BspUjh48Xs8MQaJ/4jcvw==}
@@ -3533,7 +3539,7 @@ snapshots:
 
   '@kwsites/file-exists@1.1.1':
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -4004,6 +4010,11 @@ snapshots:
       '@visactor/vutils': 0.19.4
 
   '@visactor/vtable-editors@1.17.3': {}
+
+  '@visactor/vtable-search@1.17.3':
+    dependencies:
+      '@visactor/vtable': 1.17.3
+      '@visactor/vutils': 0.19.4
 
   '@visactor/vtable@1.17.3':
     dependencies:

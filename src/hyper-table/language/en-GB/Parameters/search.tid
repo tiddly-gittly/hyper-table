@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/search
+tags: BasicTable PivotTable
+field: search
+description: Enable search or not, default is `no`. Fill in `search-bar` to display a search box at the bottom of the table.
+example: no search-bar

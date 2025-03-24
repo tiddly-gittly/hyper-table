@@ -39,6 +39,7 @@ title: examples/PivotTable
 [[$:/state/examples/PivotTable/data]]
 
 <$pivot-table
+  search="search-bar"
   records={{$:/state/examples/PivotTable/data}}
   rows="""
   [

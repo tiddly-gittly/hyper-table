@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
+import { SearchComponent } from '@visactor/vtable-search';
 import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITiddlerFields } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
@@ -12,7 +13,10 @@ import { handleChangeCellValue } from '../utils/handleChangeCellValue';
 import { onCellClickEvent } from '../utils/onCellClickEvent';
 import { parseColumnShortcut } from '../utils/parseColumnShortcut';
 import { registerEditors } from '../utils/registerEditors';
+import { searchBar } from '../utils/searchBar';
 import { addTagRender } from '../utils/tagRender';
+
+import './style.css';
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTable | PivotTable;
@@ -47,9 +51,9 @@ class ListTableWidget extends Widget {
     this.parentDomNode = parent;
     this.computeAttributes();
     this.execute();
-    const containerElement = this.getContainerElement();
+    const { containerElement, tableContainerElement } = this.getContainerElement();
     const option: ListTableConstructorOptions = {
-      container: containerElement,
+      container: tableContainerElement,
       keyboardOptions: {
         copySelected: true,
         pasteValueToCell: true,
@@ -64,6 +68,14 @@ class ListTableWidget extends Widget {
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
     this.tableInstance = new ListTable(option);
+    this.additionalFeatures(containerElement);
+
+    parent.insertBefore(containerElement, nextSibling);
+    this.domNodes.push(containerElement);
+  }
+
+  protected additionalFeatures(containerElement: HTMLElement) {
+    if (!this.tableInstance) return;
     const enableTitleFieldNavigate = this.getAttribute('titleNav') !== 'no';
     if (enableTitleFieldNavigate) {
       this.tableInstance.on(ListTable.EVENT_TYPE.DBLCLICK_CELL, (event) => {
@@ -75,9 +87,14 @@ class ListTableWidget extends Widget {
       registerEditors();
       this.tableInstance.on(ListTable.EVENT_TYPE.CHANGE_CELL_VALUE, this.handleChangeCellValue.bind(this));
     }
-
-    parent.insertBefore(containerElement, nextSibling);
-    this.domNodes.push(containerElement);
+    const enableSearchBar = this.getAttribute('search') === 'search-bar';
+    if (enableSearchBar) {
+      const search = new SearchComponent({
+        table: this.tableInstance,
+        autoJump: true,
+      });
+      searchBar(search, containerElement);
+    }
   }
 
   private handleChangeCellValue(event: TableEventHandlersEventArgumentMap[typeof ListTable.EVENT_TYPE.CHANGE_CELL_VALUE]) {
@@ -89,17 +106,23 @@ class ListTableWidget extends Widget {
     }
   }
 
+  protected tableContainerClassName = 'tc-hyper-table-list-table';
+
   protected getContainerElement() {
     const height = this.getAttribute('height') || '400px';
     const width = this.getAttribute('width') || '100%';
     const containerElement = $tw.utils.domMaker('p', {
-      class: 'tc-hyper-table tc-hyper-table-list-table',
+      class: 'tc-hyper-table',
+    });
+    const tableContainerElement = $tw.utils.domMaker('div', {
+      class: this.tableContainerClassName,
       style: {
         height,
         width,
       },
     });
-    return containerElement;
+    containerElement.append(tableContainerElement);
+    return { containerElement, tableContainerElement };
   }
 
   protected getCommonOptions() {
@@ -198,13 +221,15 @@ class ListTableWidget extends Widget {
 }
 
 class PivotTableWidget extends ListTableWidget {
+  protected tableContainerClassName = 'tc-hyper-table-pivot-table';
+
   render(parent: Element, nextSibling: Element) {
     this.parentDomNode = parent;
     this.computeAttributes();
     this.execute();
-    const containerElement = this.getContainerElement();
+    const { containerElement, tableContainerElement } = this.getContainerElement();
     const option: PivotTableConstructorOptions = {
-      container: containerElement,
+      container: tableContainerElement,
       keyboardOptions: {
         copySelected: true,
         pasteValueToCell: true,
@@ -220,6 +245,7 @@ class PivotTableWidget extends ListTableWidget {
       ...(this.getOtherOptionFromString() ?? {}) as PivotTableConstructorOptions,
     };
     this.tableInstance = new PivotTable(option);
+    this.additionalFeatures(containerElement);
 
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
