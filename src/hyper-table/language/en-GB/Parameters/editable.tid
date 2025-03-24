@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/editable
+tags: BasicTable
+field: editable
+description: Whether editing table content is allowed. Default is 'no'. Fill in 'yes' to allow editing on double-click.
+example: yes no

@@ -1,0 +1,5 @@
+title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/editable
+tags: BasicTable
+field: editable
+description: 是否允许编辑表格内容，默认是 'no'。可以填 'yes' 允许双击编辑。
+example: yes no
