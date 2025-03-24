@@ -1,0 +1,10 @@
+created: 20130825143000000
+modified: 20211115013141494
+tags: task TaskManagementExample
+title: Compose ballad
+icon: 🎵
+description: Compose a ballad about the life of a tree
+priority: 1
+status: in-progress
+
+//This is a sample task for the TaskManagementExample//
