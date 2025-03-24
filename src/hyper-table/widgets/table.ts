@@ -106,16 +106,17 @@ class ListTableWidget extends Widget {
     const isDarkMode = this.wiki.getTiddler(this.wiki.getTiddlerText('$:/palette') ?? '')?.fields?.['color-scheme'] === 'dark';
     const lightTheme = this.getAttribute('lightTheme') as 'DEFAULT' || 'DEFAULT';
     const darkTheme = this.getAttribute('darkTheme') as 'DARK' || 'DARK';
+    const sort = this.getAttribute('sort', 'modified');
     return {
       widthMode,
       // eslint-disable-next-line import/namespace
       theme: isDarkMode ? themes[darkTheme] : themes[lightTheme],
-      sortState: [
+      sortState: sort !== 'no' ? [
         {
-          field: 'modified',
+          field: sort,
           order: 'desc'
         },
-      ],
+      ] : undefined,
     };
   }
 
