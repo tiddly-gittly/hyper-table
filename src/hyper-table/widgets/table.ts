@@ -13,8 +13,8 @@ import { handleChangeCellValue } from '../utils/handleChangeCellValue';
 import { onCellClickEvent } from '../utils/onCellClickEvent';
 import { parseColumnShortcut } from '../utils/parseColumnShortcut';
 import { registerEditors } from '../utils/registerEditors';
-import { searchBar } from './search-bar/searchBar';
 import { addTagRender } from '../utils/tagRender';
+import { searchBar } from './search-bar/searchBar';
 
 import './style.css';
 import { parseWikiTextTable } from '../utils/wikiTextTable';

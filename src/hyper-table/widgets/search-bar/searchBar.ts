@@ -21,19 +21,21 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
   const searchButton = $tw.utils.domMaker('button', {
     class: 'tc-hyper-table-search-btn',
   });
-  searchButton.innerText = 'search';
+  searchButton.innerText = $tw.wiki.getTiddlerText('$:/language/Search/Search') ?? 'Search';
   searchContainer.append(searchButton);
 
   const previousButton = $tw.utils.domMaker('button', {
     class: 'tc-hyper-table-prev-btn',
   });
-  previousButton.innerText = 'prev';
+  previousButton.innerText = '←';
+  previousButton.title = $tw.wiki.getTiddlerText('$:/language/Shortcuts/Input/Up/Hint') ?? 'Previous';
   searchContainer.append(previousButton);
 
   const nextButton = $tw.utils.domMaker('button', {
     class: 'tc-hyper-table-next-btn',
   });
-  nextButton.innerText = 'next';
+  nextButton.innerText = '→';
+  nextButton.title = $tw.wiki.getTiddlerText('$:/language/Shortcuts/Input/Down/Hint') ?? 'Next';
   searchContainer.append(nextButton);
 
   // 辅助函数：更新搜索结果计数
@@ -60,11 +62,15 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
   });
 
   previousButton.addEventListener('click', () => {
-    updateResultCount(search.prev());
+    if (search?.queryResult?.length > 0) {
+      updateResultCount(search.prev());
+    }
   });
 
   nextButton.addEventListener('click', () => {
-    updateResultCount(search.next());
+    if (search?.queryResult?.length > 0) {
+      updateResultCount(search.next());
+    }
   });
 
   containerElement.append(searchContainer);
