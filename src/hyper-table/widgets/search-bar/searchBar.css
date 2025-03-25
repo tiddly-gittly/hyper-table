@@ -5,14 +5,16 @@
   gap: 10px;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 .tc-hyper-table-search-input {
   padding: 5px;
   border-radius: 4px;
   flex-grow: 1;
+  padding-right: 25px;
+  position: relative;
 }
-
 .tc-hyper-table-search-btn,
 .tc-hyper-table-next-btn,
 .tc-hyper-table-prev-btn {
@@ -25,4 +27,26 @@
 .tc-hyper-table-search-result-count {
   margin-left: 10px;
   font-weight: bold;
+}
+
+.tc-hyper-table-clear-btn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 5px;
+  z-index: 2;
+}
+
+.tc-hyper-table-input-container {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+}
+
+.tc-hyper-table-hidden {
+  display: none !important;
 }
