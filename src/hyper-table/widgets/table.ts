@@ -13,7 +13,7 @@ import { handleChangeCellValue } from '../utils/handleChangeCellValue';
 import { onCellClickEvent } from '../utils/onCellClickEvent';
 import { parseColumnShortcut } from '../utils/parseColumnShortcut';
 import { registerEditors } from '../utils/registerEditors';
-import { searchBar } from '../utils/searchBar';
+import { searchBar } from './search-bar/searchBar';
 import { addTagRender } from '../utils/tagRender';
 
 import './style.css';

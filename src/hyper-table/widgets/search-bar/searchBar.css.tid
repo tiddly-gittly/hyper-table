@@ -1,0 +1,10 @@
+title: $:/plugins/linonetwo/hyper-table/widgets/search-bar/searchBar.css.tid
+tags: $:/tags/Stylesheet
+
+\rules except horizrule dash
+
+.tc-hyper-table-search-btn,
+.tc-hyper-table-next-btn,
+.tc-hyper-table-prev-btn {
+  color: <<colour button-foreground>>;
+}
