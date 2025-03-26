@@ -1,0 +1,9 @@
+{
+  "title": "$:/plugins/linonetwo/hyper-table-addon-pivot-table",
+  "name": "hyper-table-addon-pivot-table",
+  "author": "linonetwo",
+  "description": "Add pivot-table widget based on hyper-table plugin.",
+  "plugin-type": "plugin",
+  "version": "0.0.1",
+  "list": "readme"
+}
