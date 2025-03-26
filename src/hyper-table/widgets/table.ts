@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
-import { ListTable, ListTableConstructorOptions, PivotTable, PivotTableConstructorOptions, themes } from '@visactor/vtable';
+import { ListTableSimple, ListTableConstructorOptions, PivotTableSimple, PivotTableConstructorOptions, themes, registerMenu } from '@visactor/vtable';
 import { SearchComponent } from '@visactor/vtable-search';
 import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITextParseTreeNode, ITiddlerFields, IWikiASTNode } from 'tiddlywiki';
@@ -19,8 +19,10 @@ import { searchBar } from './search-bar/searchBar';
 import './style.css';
 import { parseWikiTextTable } from '../utils/wikiTextTable';
 
+registerMenu();
+
 class ListTableWidget extends Widget {
-  tableInstance?: ListTable | PivotTable;
+  tableInstance?: ListTableSimple | PivotTableSimple;
   previousFilterResult: string[] = [];
 
   refresh(changedTiddlers: IChangedTiddlers) {
@@ -67,7 +69,7 @@ class ListTableWidget extends Widget {
       ...this.getSortOptions(),
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
-    this.tableInstance = new ListTable(option);
+    this.tableInstance = new ListTableSimple(option);
     this.additionalFeatures(containerElement);
 
     parent.insertBefore(containerElement, nextSibling);
@@ -93,14 +95,14 @@ class ListTableWidget extends Widget {
     if (!this.tableInstance) return;
     const enableTitleFieldNavigate = this.getAttribute('titleNav') !== 'no';
     if (enableTitleFieldNavigate) {
-      this.tableInstance.on(ListTable.EVENT_TYPE.DBLCLICK_CELL, (event) => {
+      this.tableInstance.on(ListTableSimple.EVENT_TYPE.DBLCLICK_CELL, (event) => {
         onCellClickEvent(event, this);
       });
     }
     const enableEdit = this.getAttribute('editable') === 'yes';
     if (enableEdit) {
       registerEditors();
-      this.tableInstance.on(ListTable.EVENT_TYPE.CHANGE_CELL_VALUE, this.handleChangeCellValue.bind(this));
+      this.tableInstance.on(ListTableSimple.EVENT_TYPE.CHANGE_CELL_VALUE, this.handleChangeCellValue.bind(this));
     }
     const enableSearchBar = this.getAttribute('search') === 'search-bar';
     if (enableSearchBar) {
@@ -112,7 +114,7 @@ class ListTableWidget extends Widget {
     }
   }
 
-  private handleChangeCellValue(event: TableEventHandlersEventArgumentMap[typeof ListTable.EVENT_TYPE.CHANGE_CELL_VALUE]) {
+  private handleChangeCellValue(event: TableEventHandlersEventArgumentMap[typeof ListTableSimple.EVENT_TYPE.CHANGE_CELL_VALUE]) {
     const { col: columnIndex, row: rowIndex, changedValue, currentValue } = event;
     const record = this.tableInstance?.records?.[rowIndex - 1];
     const columnKey = this.getListColumns()?.[columnIndex]?.field?.toString?.();
@@ -259,7 +261,7 @@ class PivotTableWidget extends ListTableWidget {
       indicators: this.getPivotOption<IIndicator[]>('indicators', ['created', 'modified']),
       ...(this.getOtherOptionFromString() ?? {}) as PivotTableConstructorOptions,
     };
-    this.tableInstance = new PivotTable(option);
+    this.tableInstance = new PivotTableSimple(option);
     this.additionalFeatures(containerElement);
 
     parent.insertBefore(containerElement, nextSibling);
