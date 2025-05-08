@@ -3,7 +3,7 @@ title: examples/SimpleTable
 <$testcase>
 <$data title=Output text="""<$basic-table
   height="150px"
-  search="search-bar"
+  search="search-bar-top"
 >
 |!Cell1 |!Cell2 |
 |Cell3 |Cell4 |

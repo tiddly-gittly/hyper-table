@@ -1,9 +1,9 @@
 import { SearchComponent } from '@visactor/vtable-search';
 import './searchBar.css';
 
-export function searchBar(search: SearchComponent, containerElement: HTMLElement) {
+export function searchBar(search: SearchComponent, containerElement: HTMLElement, searchBarPosition: 'top' | 'bottom') {
   const searchContainer = $tw.utils.domMaker('div', {
-    class: 'tc-hyper-table-search-container',
+    class: `tc-hyper-table-search-container tc-hyper-table-search-${searchBarPosition}`,
   });
 
   const inputContainer = $tw.utils.domMaker('div', {
@@ -99,5 +99,9 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
     }
   });
 
-  containerElement.append(searchContainer);
+  if (searchBarPosition === 'top') {
+    containerElement.prepend(searchContainer);
+  } else {
+    containerElement.append(searchContainer);
+  }
 }

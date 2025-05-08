@@ -104,13 +104,18 @@ class ListTableWidget extends Widget {
       registerEditors();
       this.tableInstance.on(ListTableSimple.EVENT_TYPE.CHANGE_CELL_VALUE, this.handleChangeCellValue.bind(this));
     }
-    const enableSearchBar = this.getAttribute('search') === 'search-bar';
-    if (enableSearchBar) {
+    let searchBarPosition = null;
+    if (this.getAttribute('search') === 'search-bar') {
+      searchBarPosition = 'bottom' as const;
+    } else if (this.getAttribute('search') === 'search-bar-top') {
+      searchBarPosition = 'top' as const;
+    }
+    if (searchBarPosition) {
       const search = new SearchComponent({
         table: this.tableInstance,
         autoJump: true,
       });
-      searchBar(search, containerElement);
+      searchBar(search, containerElement, searchBarPosition);
     }
   }
 

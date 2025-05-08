@@ -8,3 +8,10 @@ tags: $:/tags/Stylesheet
 .tc-hyper-table-prev-btn {
   color: <<colour button-foreground>>;
 }
+.tc-hyper-table-search-top {
+  border-bottom: 1px solid <<colour tab-divider>>;
+}
+
+.tc-hyper-table-search-bottom {
+  border-top: 1px solid <<colour tab-divider>>;
+}
