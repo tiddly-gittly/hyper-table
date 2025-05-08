@@ -22,3 +22,8 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Readme
 微件上可以使用各种参数，你可以先在文档网站上查看用例，从例子中学习，或根据参数表自己拼凑参数。
 
 [[查看参数表|$:/plugins/linonetwo/hyper-table/ParametersTable]]
+
+!! 问题排查
+
+* 表格不展示，检查发现宽度为 0
+** 试着给父容器加上 `width: 100%`，因为表格会尝试适配父容器宽度，而如果父容器一开始宽度为 0 就会这样了。

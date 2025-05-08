@@ -22,3 +22,8 @@ This plugin provides several widgets:
 There are a variety of parameters that can be used on the Widget, and you can start by checking out the use cases on the documentation site to learn from the examples, or by piecing together your own parameters based on the parameter list.
 
 [[Read the Parameters Table|$:/plugins/linonetwo/hyper-table/ParametersTable]]
+
+!! Troubleshooting
+
+* The table does not display, and the width is found to be 0
+** Try adding `width: 100%` to the parent container, because the table will try to adapt to the width of the parent container, and if the parent container is initially 0, it will be like this.
