@@ -6,6 +6,7 @@ import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { ListTableSimple, ListTableConstructorOptions, PivotTableSimple, PivotTableConstructorOptions, themes, registerMenu } from '@visactor/vtable';
 import { SearchComponent } from '@visactor/vtable-search';
 import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
+import { registerCustomCellStylePlugin } from '@visactor/vtable/es/plugins/custom-cell-style';
 import { IChangedTiddlers, ITextParseTreeNode, ITiddlerFields, IWikiASTNode } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
 import { getEnumName } from '../utils/getFieldName';
@@ -20,6 +21,7 @@ import './style.css';
 import { parseWikiTextTable } from '../utils/wikiTextTable';
 
 registerMenu();
+registerCustomCellStylePlugin();
 
 class ListTableWidget extends Widget {
   tableInstance?: ListTableSimple | PivotTableSimple;
