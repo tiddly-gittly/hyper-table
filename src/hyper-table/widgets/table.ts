@@ -71,8 +71,6 @@ class ListTableWidget extends Widget {
       ...this.getSortOptions(),
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
-    // DEBUG: console this.getSortOptions()
-    console.log(`this.getSortOptions()`, this.getSortOptions());
     this.tableInstance = new ListTableSimple(option);
     this.additionalFeatures(containerElement);
 

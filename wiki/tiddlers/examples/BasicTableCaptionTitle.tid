@@ -14,6 +14,7 @@ title: examples/BasicTableCaptionTitle
       {
         field: 'caption',
         title: 'Caption',
+        sort: true,
         fieldFormat: ({ caption }) => $tw.wiki.renderText('text/plain', 'text/vnd.tiddlywiki', caption),
         width: 'auto',
       },

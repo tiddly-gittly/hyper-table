@@ -32,6 +32,7 @@ title: examples/BasicTableJSONConfig
     }
   ]
   """
+  sort="orderDate,sales,orderId"
   columns="""
   [
     {
@@ -50,25 +51,21 @@ title: examples/BasicTableJSONConfig
       field: 'productName',
       title: 'Product Name',
       width: 'auto',
-      sort: true,
     },
     {
       field: 'category',
       title: 'Category',
       width: 'auto',
-      sort: true,
     },
     {
       field: 'subCategory',
       title: 'Sub-Category',
       width: 'auto',
-      sort: true,
     },
     {
       field: 'region',
       title: 'Region',
       width: 'auto',
-      sort: true,
     },
     {
       field: 'city',
