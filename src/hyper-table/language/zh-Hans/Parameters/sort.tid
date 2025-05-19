@@ -1,5 +1,5 @@
 title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Parameters/sort
 tags: BasicTable PivotTable
 field: sort
-description: 用哪个字段排序，默认是根据条目修改时间。可以填条目上会有的任何字段，或填 `no` 表示不做额外排序，而完全按照筛选器或者数据给定的顺序来展示。
-example: no created modified
+description: 用哪些字段排序，默认是根据条目修改时间。可以填条目上会有的任何字段，支持多个字段（用空格或逗号分隔），会按照指定顺序依次排序。可填 `no` 表示不做额外排序，而完全按照筛选器或者数据给定的顺序来展示。
+example: no created modified title,created,modified

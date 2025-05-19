@@ -1,5 +1,5 @@
 title: $:/plugins/linonetwo/hyper-table/language/en-GB/Parameters/sort
 tags: BasicTable PivotTable
 field: sort
-description: Which field to sort by, default is `modified` of tiddler. Can use any tiddler's field, or fill in `no` to indicate no additional sorting, and follow the order of filter result or data given.
-example: no created modified
+description: Which fields to sort by, default is `modified` of tiddler. Can use any tiddler's field, supports multiple fields (separated by spaces or commas), and will sort in the specified order. You can fill in `no` to indicate no additional sorting, and follow the order of filter result or data given.
+example: no created modified title,created,modified

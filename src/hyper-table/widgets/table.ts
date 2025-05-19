@@ -71,6 +71,8 @@ class ListTableWidget extends Widget {
       ...this.getSortOptions(),
       ...(this.getOtherOptionFromString() ?? {}) as ListTableConstructorOptions,
     };
+    // DEBUG: console this.getSortOptions()
+    console.log(`this.getSortOptions()`, this.getSortOptions());
     this.tableInstance = new ListTableSimple(option);
     this.additionalFeatures(containerElement);
 
@@ -162,14 +164,19 @@ class ListTableWidget extends Widget {
   }
 
   private getSortOptions(): Partial<ListTableConstructorOptions> {
-    const sort = this.getAttribute('sort', 'modified');
+    const sortValue = this.getAttribute('sort', 'modified');
+    if (sortValue === 'no') {
+      return { sortState: undefined };
+    }
+    const sortFields = sortValue.split(/[\s,]+/).filter(field => field.trim() !== '');
+    if (sortFields.length === 0) {
+      return { sortState: undefined };
+    }
     return {
-      sortState: sort === 'no' ? undefined : [
-        {
-          field: sort,
-          order: 'desc',
-        },
-      ] as SortState[],
+      sortState: sortFields.map(field => ({
+        field,
+        order: 'desc',
+      })) as SortState[],
     };
   }
 
