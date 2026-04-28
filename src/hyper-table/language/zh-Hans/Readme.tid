@@ -23,6 +23,39 @@ title: $:/plugins/linonetwo/hyper-table/language/zh-Hans/Readme
 
 [[查看参数表|$:/plugins/linonetwo/hyper-table/ParametersTable]]
 
+!! 用 Wikitext 生成 columns
+
+传给 `columns=` 的值最终会按纯 JavaScript 执行。如果列定义里依赖 Wikitext 变量、翻译后的标题，或可复用的 `fieldFormat` 片段，应该先把这些片段渲染成纯文本，再把最终的 columns 文本再渲染一次后传给表格。
+
+```tid
+\procedure columns()
+[
+	{
+		field: 'title',
+		title: 'title',
+		fieldFormat: <<titleFieldFormat>>,
+	},
+	{
+		field: 'body-parts',
+		title: '<<bodyPartsColumnTitle>>',
+		fieldFormat: <<bodyPartsFieldFormat>>,
+	},
+]
+\end
+
+<$let bodyPartsColumnTitle={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]addprefix[$:/plugins/example/language/]addsuffix[/Columns/BodyParts]get[text]] }}}>
+<$wikify name="titleFieldFormat" text=<<title-field-format>> output="text">
+<$wikify name="bodyPartsFieldFormat" text=<<body-parts-field-format>> output="text">
+<$wikify name="tableColumns" text=<<columns>> output="text">
+<$basic-table columns=<<tableColumns>> ... />
+</$wikify>
+</$wikify>
+</$wikify>
+</$let>
+```
+
+这样既可以继续用 Wikitext 组织列定义，又能保证 hyper-table 最终拿到的是可执行的 JavaScript 对象字面量。
+
 !! 问题排查
 
 * 表格不展示，检查发现宽度为 0
