@@ -173,7 +173,7 @@ class ListTableWidget extends Widget {
     return {
       sortState: sortFields.map(field => ({
         field,
-        order: 'desc',
+        order: 'ASC' as SortState['order'],
       })) as SortState[],
     };
   }
