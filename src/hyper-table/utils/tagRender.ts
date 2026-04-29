@@ -65,7 +65,7 @@ function onTagClickHandler(tagTitle: string, widget: Widget) {
  * Similar to the `mapTiddlerFieldsToFullCalendarEventObject` in tw-calendar, but simplified to only use tag's color, not tiddler's color.
  */
 function getTagAndTextColor(tagTitle: string, currentPalette: Record<string, string | undefined>) {
-  const backgroundColor = $tw.wiki.getTiddler(tagTitle)?.fields?.color ?? currentPalette['tag-background'];
+  const backgroundColor = $tw.wiki.getTiddler(tagTitle)?.fields.color ?? currentPalette['tag-background'];
   let textColor: string | undefined;
 
   if (backgroundColor !== undefined) {
@@ -84,7 +84,7 @@ function getTagAndTextColor(tagTitle: string, currentPalette: Record<string, str
   return { backgroundColor, textColor };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const contrastColour: (colour: string, fallbackTarget: string, colourFore: string, colourBack: string) => number[] | string =
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  require('$:/core/modules/macros/contrastcolour.js').run;
+const contrastColourModule = $tw.modules.execute('$:/core/modules/macros/contrastcolour.js', '') as {
+  run: (colour: string, fallbackTarget: string, colourFore: string, colourBack: string) => number[] | string;
+};
+const contrastColour = contrastColourModule.run;

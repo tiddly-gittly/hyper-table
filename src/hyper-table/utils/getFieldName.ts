@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-null */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { JSONSchema4 } from 'json-schema';
 
 /**
@@ -13,7 +11,7 @@ let traitTagSchemas: JSONSchema4[] | undefined;
  */
 function getSchemas() {
   return $tw.wiki.filterTiddlers('[all[shadows+tiddlers]tag[$:/SuperTag/TraitTag]]')
-    .map(title => $tw.wiki.getTiddler(title)?.fields?.schema)
+    .map(title => $tw.wiki.getTiddler(title)?.fields.schema)
     .map((schema: unknown) => {
       if (typeof schema === 'string') {
         try {
@@ -40,7 +38,7 @@ export function getFieldName(field: string): string {
     const lingoBase = schema['lingo-base'] as string | undefined;
     if (lingoBase === undefined) continue;
     const property = schema.properties[field];
-    const lingoKey = property?.title;
+    const lingoKey = property.title;
     if (lingoKey) {
       const languageTiddlerTitle = `${lingoBase}${languageCode}/${lingoKey}`;
       const translation = $tw.wiki.getTiddlerText(languageTiddlerTitle, field);
@@ -71,13 +69,13 @@ export function getEnumName(field: string, enumName: unknown): string {
     const lingoBase = schema['lingo-base'] as string | undefined;
     if (lingoBase === undefined) continue;
     const property = schema.properties[field];
-    const lingoIndex = property?.enum?.findIndex((item) => item === enumName);
+    const lingoIndex = property.enum?.findIndex((item) => item === enumName);
     // If find the field name, but it is not a enum, mark field cache as `null`
-    if (property !== undefined && lingoIndex === undefined) {
+    if (lingoIndex === undefined) {
       cachedEnumTranslation[field] = null;
       return enumName;
     }
-    if (lingoIndex !== undefined && lingoIndex >= 0) {
+    if (lingoIndex >= 0) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const lingoKey = property.options?.enum_titles?.[lingoIndex] as string | undefined;
       if (lingoKey) {

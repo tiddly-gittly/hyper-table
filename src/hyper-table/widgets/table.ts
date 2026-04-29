@@ -1,12 +1,10 @@
-/* eslint-disable no-new-func */
 /* eslint-disable @typescript-eslint/no-implied-eval */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
-import { ListTableSimple, ListTableConstructorOptions, PivotTableSimple, PivotTableConstructorOptions, themes, registerMenu } from '@visactor/vtable';
+import { ListTableConstructorOptions, ListTableSimple, PivotTableConstructorOptions, PivotTableSimple, registerMenu, themes } from '@visactor/vtable';
 import { SearchComponent } from '@visactor/vtable-search';
-import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
 import { registerCustomCellStylePlugin } from '@visactor/vtable/es/plugins/custom-cell-style';
+import { ColumnsDefine, IColumnDimension, IIndicator, IRowDimension, SortState, TableEventHandlersEventArgumentMap } from '@visactor/vtable/es/ts-types';
 import { IChangedTiddlers, ITextParseTreeNode, ITiddlerFields, IWikiASTNode } from 'tiddlywiki';
 import { evalColumnJSString } from '../utils/evalColumnJSString';
 import { getEnumName } from '../utils/getFieldName';
@@ -26,10 +24,15 @@ registerCustomCellStylePlugin();
 class ListTableWidget extends Widget {
   tableInstance?: ListTableSimple | PivotTableSimple;
   previousFilterResult: string[] = [];
+  paletteChangeListener?: (event: unknown) => void;
 
   refresh(changedTiddlers: IChangedTiddlers) {
+    if (this.shouldRefreshForPaletteChange(changedTiddlers)) {
+      this.refreshSelf();
+      return true;
+    }
     const changedAttributes = this.computeAttributes();
-    if ($tw.utils.count(changedAttributes) > 0) {
+    if (Object.keys(changedAttributes).length > 0) {
       this.refreshSelf();
       return true;
     }
@@ -73,6 +76,7 @@ class ListTableWidget extends Widget {
     };
     this.tableInstance = new ListTableSimple(option);
     this.additionalFeatures(containerElement);
+    this.registerPaletteChangeListener();
 
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
@@ -123,10 +127,12 @@ class ListTableWidget extends Widget {
 
   private handleChangeCellValue(event: TableEventHandlersEventArgumentMap[typeof ListTableSimple.EVENT_TYPE.CHANGE_CELL_VALUE]) {
     const { col: columnIndex, row: rowIndex, changedValue, currentValue } = event;
-    const record = this.tableInstance?.records?.[rowIndex - 1];
+    const records = this.tableInstance?.records as ITiddlerFields[] | undefined;
+    const record = records?.[rowIndex - 1];
+    const recordTitle = typeof record?.title === 'string' ? record.title : undefined;
     const columnKey = this.getListColumns()?.[columnIndex]?.field?.toString?.();
-    if (record?.title && typeof columnKey === 'string' && this.wiki.tiddlerExists(record.title)) {
-      handleChangeCellValue(record.title, columnKey, changedValue, currentValue);
+    if (recordTitle !== undefined && recordTitle !== '' && typeof columnKey === 'string' && this.wiki.tiddlerExists(recordTitle)) {
+      handleChangeCellValue(recordTitle, columnKey, changedValue, currentValue);
     }
   }
 
@@ -151,14 +157,51 @@ class ListTableWidget extends Widget {
 
   protected getCommonOptions() {
     const widthMode = this.getAttribute('widthMode') as 'standard' | 'adaptive' | 'autoWidth' | undefined || 'adaptive';
-    const isDarkMode = this.wiki.getTiddler(this.wiki.getTiddlerText('$:/palette') ?? '')?.fields?.['color-scheme'] === 'dark';
-    const lightTheme = this.getAttribute('lightTheme') as 'DEFAULT' || 'DEFAULT';
-    const darkTheme = this.getAttribute('darkTheme') as 'DARK' || 'DARK';
+    const isDarkMode = this.wiki.getTiddler(this.getCurrentPaletteTitle())?.fields['color-scheme'] === 'dark';
+    const lightTheme = (this.getAttribute('lightTheme') as 'DEFAULT' | undefined) ?? 'DEFAULT';
+    const darkTheme = (this.getAttribute('darkTheme') as 'DARK' | undefined) ?? 'DARK';
     return {
       widthMode,
-      // eslint-disable-next-line import/namespace
+
       theme: isDarkMode ? themes[darkTheme] : themes[lightTheme],
     };
+  }
+
+  protected getPaletteWiki() {
+    return $tw.wiki;
+  }
+
+  protected getCurrentPaletteTitle() {
+    return this.getPaletteWiki().getTiddlerText('$:/palette', '$:/palettes/Vanilla');
+  }
+
+  protected shouldRefreshForPaletteChange(changedTiddlers: IChangedTiddlers) {
+    const currentPaletteTitle = this.getCurrentPaletteTitle();
+    return (
+      ('$:/palette' in changedTiddlers && changedTiddlers['$:/palette'].modified) ||
+      (currentPaletteTitle in changedTiddlers && changedTiddlers[currentPaletteTitle].modified)
+    );
+  }
+
+  protected registerPaletteChangeListener() {
+    const paletteWiki = this.getPaletteWiki();
+    if (this.paletteChangeListener !== undefined || paletteWiki === this.wiki) {
+      return;
+    }
+    this.paletteChangeListener = (event) => {
+      if (this.shouldRefreshForPaletteChange(event as IChangedTiddlers)) {
+        this.refreshSelf();
+      }
+    };
+    paletteWiki.addEventListener('change', this.paletteChangeListener);
+  }
+
+  protected unregisterPaletteChangeListener() {
+    if (this.paletteChangeListener === undefined) {
+      return;
+    }
+    this.getPaletteWiki().removeEventListener('change', this.paletteChangeListener);
+    this.paletteChangeListener = undefined;
   }
 
   private getSortOptions(): Partial<ListTableConstructorOptions> {
@@ -179,6 +222,7 @@ class ListTableWidget extends Widget {
   }
 
   removeChildDomNodes(): void {
+    this.unregisterPaletteChangeListener();
     if (this.tableInstance !== undefined) {
       this.tableInstance = undefined;
     }
@@ -188,7 +232,7 @@ class ListTableWidget extends Widget {
   protected getRecords(): unknown[] | undefined {
     const filter = this.getAttribute('filter');
     // remove padding new lines, so it won't change line after `return` in the `new Function`, which cause return undefined.
-    const recordsString = this.getAttribute('records')?.trim?.();
+    const recordsString = this.getAttribute('records')?.trim();
     let records: unknown[] | undefined = [];
     if (filter) {
       const filteredTitles = this.wiki.filterTiddlers(filter, this);
@@ -196,9 +240,9 @@ class ListTableWidget extends Widget {
       records = filteredTitles.map((title) => this.wiki.getTiddler(title)?.fields).filter((item): item is ITiddlerFields => item !== undefined);
     } else if (recordsString) {
       try {
-        const parsedRecords = new Function(
+        const parsedRecords = (new Function(
           `return ${recordsString}`,
-        )() as unknown[] | undefined;
+        ) as () => unknown[] | undefined)();
         if (parsedRecords !== undefined) {
           records = parsedRecords;
         }
@@ -217,7 +261,7 @@ class ListTableWidget extends Widget {
   }
 
   private getListColumns(): ColumnsDefine | undefined {
-    const columnsString = this.getAttribute('columns')?.trim?.();
+    const columnsString = this.getAttribute('columns')?.trim();
     let columns: ColumnsDefine | undefined = [{ field: 'title', title: 'Title', width: 'auto' }];
     if (columnsString) {
       // JS version usually include using `=>` arrow function. This simple version should not
@@ -235,12 +279,12 @@ class ListTableWidget extends Widget {
   }
 
   protected getOtherOptionFromString(): unknown {
-    const optionsString = this.getAttribute('options')?.trim?.();
+    const optionsString = this.getAttribute('options')?.trim();
     if (optionsString) {
       try {
-        const parsedOption = new Function(
+        const parsedOption = (new Function(
           `return ${optionsString}`,
-        )() as unknown;
+        ) as () => unknown)();
         return parsedOption;
       } catch (error) {
         console.error(`hyper-table list-table failed to parse options\n\n${optionsString}`, error);
@@ -268,28 +312,27 @@ class PivotTableWidget extends ListTableWidget {
       },
       ...this.getCommonOptions(),
       records: this.getRecords(),
-      columns: this.getPivotOption<IColumnDimension[]>('columns', ['tags']),
-      rows: this.getPivotOption<IRowDimension[]>('rows', ['title']),
-      indicators: this.getPivotOption<IIndicator[]>('indicators', ['created', 'modified']),
+      columns: this.getPivotOption('columns', ['tags']) as IColumnDimension[],
+      rows: this.getPivotOption('rows', ['title']) as IRowDimension[],
+      indicators: this.getPivotOption('indicators', ['created', 'modified']) as IIndicator[],
       ...(this.getOtherOptionFromString() ?? {}) as PivotTableConstructorOptions,
     };
     this.tableInstance = new PivotTableSimple(option);
     this.additionalFeatures(containerElement);
+    this.registerPaletteChangeListener();
 
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
   }
 
-  private getPivotOption<T extends IIndicator[] | string[] | undefined>(field: string, defaultValue: string[]): T;
-  private getPivotOption<T extends IColumnDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T;
-  private getPivotOption<T extends IRowDimension[] | string[] | undefined>(field: string, defaultValue: string[]): T {
-    const columnsString = this.getAttribute(field)?.trim?.();
-    let columns = defaultValue as T;
+  private getPivotOption(field: string, defaultValue: string[]): unknown {
+    const columnsString = this.getAttribute(field)?.trim();
+    let columns: unknown = defaultValue;
     if (columnsString) {
       try {
-        const parsedOptions = new Function(
+        const parsedOptions = (new Function(
           `return ${columnsString}`,
-        )() as T;
+        ) as () => unknown)();
         if (parsedOptions !== undefined) {
           columns = parsedOptions;
         }

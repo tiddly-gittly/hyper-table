@@ -1,0 +1,11 @@
+title: $:/plugins/linonetwo/hyper-table/changenote
+type: text/vnd.tiddlywiki
+
+! 1.4.4
+
+* Fix table not following palette (color scheme) changes when switching between light and dark palettes, including tables embedded inside `$testcase` widgets.
+* Clean up historical TypeScript and ESLint issues across widgets and utilities.
+
+! 1.4.3
+
+* Earlier releases.

@@ -16,7 +16,7 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
     attributes: { tabindex: '0' },
   });
   inputContainer.append(input);
-  
+
   const clearButton = $tw.utils.domMaker('button', {
     class: 'tc-hyper-table-clear-btn tc-hyper-table-hidden',
   });
@@ -75,7 +75,7 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
 
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-      if (search?.queryResult?.length > 0) {
+      if (search.queryResult.length > 0) {
         updateResultCount(search.next());
       } else {
         updateResultCount(search.search(input.value));
@@ -88,13 +88,13 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
   clearButton.addEventListener('click', clearSearch);
 
   previousButton.addEventListener('click', () => {
-    if (search?.queryResult?.length > 0) {
+    if (search.queryResult.length > 0) {
       updateResultCount(search.prev());
     }
   });
 
   nextButton.addEventListener('click', () => {
-    if (search?.queryResult?.length > 0) {
+    if (search.queryResult.length > 0) {
       updateResultCount(search.next());
     }
   });

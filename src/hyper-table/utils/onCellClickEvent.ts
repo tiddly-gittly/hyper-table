@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { MousePointerCellEvent } from '@visactor/vtable';
 import { ITiddlerFields, Widget } from 'tiddlywiki';
 

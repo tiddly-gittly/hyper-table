@@ -1,32 +1,38 @@
 import { ColumnsDefine } from '@visactor/vtable/es/ts-types';
-import { IDomParseTreeNode } from 'tiddlywiki';
 
-type T = IDomParseTreeNode;
-export function parseWikiTextTable(input: string): undefined | { columns: ColumnsDefine; records: any[] } {
-  const ast = $tw.wiki.parseText('text/vnd.tiddlywiki', input)?.tree;
-  if (!(ast?.length > 0) || ast[0]?.type !== 'element' || (ast[0] as T)?.tag !== 'table') {
+interface ParsedNode {
+  type: string;
+  tag?: string;
+  text?: string;
+  children?: ParsedNode[];
+}
+
+export function parseWikiTextTable(input: string): undefined | { columns: ColumnsDefine; records: Array<Record<string, string>> } {
+  const ast = $tw.wiki.parseText('text/vnd.tiddlywiki', input).tree as ParsedNode[] | undefined;
+  if (!ast || ast.length === 0 || ast[0].type !== 'element' || ast[0].tag !== 'table') {
     return;
   }
-  const trElements = ((ast as T[])[0].children as T[])?.find(element => element.type === 'element' && (element).tag === 'tbody')?.children;
+  const tbody = ast[0].children?.find(element => element.type === 'element' && element.tag === 'tbody');
+  const trElements = tbody?.children;
   if (!trElements) {
     return;
   }
 
   // 过滤出所有 tr 元素
-  const trs = trElements.filter(tr => tr.type === 'element' && (tr as any).tag === 'tr');
+  const trs = trElements.filter(tr => tr.type === 'element' && tr.tag === 'tr');
   if (trs.length === 0) {
     return;
   }
 
   // 提取单元格文本的辅助函数
-  const extractText = (element: any): string => {
+  const extractText = (element: ParsedNode | undefined): string => {
     if (!element?.children) return '';
 
     // 递归提取所有文本节点
-    const extractTextFromChildren = (children: any[]): string => {
+    const extractTextFromChildren = (children: ParsedNode[]): string => {
       return children.map(child => {
         if (child.type === 'text') {
-          return child.text || '';
+          return child.text ?? '';
         }
         if (child.children) {
           return extractTextFromChildren(child.children);
@@ -39,8 +45,8 @@ export function parseWikiTextTable(input: string): undefined | { columns: Column
   };
 
   // 获取表头行
-  const headerRow = trs[0] as T;
-  const headerCells = (headerRow.children as T[]).filter(cell => cell.type === 'element' && ((cell).tag === 'th' || (cell).tag === 'td'));
+  const headerRow = trs[0];
+  const headerCells = (headerRow.children ?? []).filter(cell => cell.type === 'element' && (cell.tag === 'th' || cell.tag === 'td'));
 
   if (headerCells.length === 0) {
     return;
@@ -77,8 +83,8 @@ export function parseWikiTextTable(input: string): undefined | { columns: Column
 
   // 从第二行开始解析数据
   for (let index = 1; index < trs.length; index++) {
-    const dataRow = trs[index] as T;
-    const dataCells = (dataRow.children as T[]).filter(cell => cell.type === 'element' && (cell.tag === 'td' || cell.tag === 'th'));
+    const dataRow = trs[index];
+    const dataCells = (dataRow.children ?? []).filter(cell => cell.type === 'element' && (cell.tag === 'td' || cell.tag === 'th'));
 
     if (dataCells.length === 0) continue;
 

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { ColumnDefine } from '@visactor/vtable';
 import { Widget } from 'tiddlywiki';
 import { getTextFieldFormat } from './getFieldFormat';
