@@ -23,6 +23,39 @@ There are a variety of parameters that can be used on the Widget, and you can st
 
 [[Read the Parameters Table|$:/plugins/linonetwo/hyper-table/ParametersTable]]
 
+!! Wikitext-generated columns
+
+The value passed to `columns=` is evaluated as plain JavaScript. If your column definitions depend on Wikitext variables, translated labels, or shared `fieldFormat` snippets, render them to plain text first and then render the final columns string once more before passing it to the table.
+
+```tid
+\procedure columns()
+[
+	{
+		field: 'title',
+		title: 'title',
+		fieldFormat: <<titleFieldFormat>>,
+	},
+	{
+		field: 'body-parts',
+		title: '<<bodyPartsColumnTitle>>',
+		fieldFormat: <<bodyPartsFieldFormat>>,
+	},
+]
+\end
+
+<$let bodyPartsColumnTitle={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]addprefix[$:/plugins/example/language/]addsuffix[/Columns/BodyParts]get[text]] }}}>
+<$wikify name="titleFieldFormat" text=<<title-field-format>> output="text">
+<$wikify name="bodyPartsFieldFormat" text=<<body-parts-field-format>> output="text">
+<$wikify name="tableColumns" text=<<columns>> output="text">
+<$basic-table columns=<<tableColumns>> ... />
+</$wikify>
+</$wikify>
+</$wikify>
+</$let>
+```
+
+This pattern keeps your table definition in Wikitext while ensuring hyper-table receives a valid JavaScript object literal.
+
 !! Troubleshooting
 
 * The table does not display, and the width is found to be 0
