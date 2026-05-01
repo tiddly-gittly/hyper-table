@@ -1,6 +1,10 @@
 title: $:/plugins/linonetwo/hyper-table/changenote
 type: text/vnd.tiddlywiki
 
+! 1.4.5
+
+* Fix crash: `Cannot read properties of undefined (reading 'enum')` when a tiddler field is not defined in any schema's properties. Added null check before accessing `property.enum` in `getEnumName`.
+
 ! 1.4.4
 
 * Fix table not following palette (color scheme) changes when switching between light and dark palettes, including tables embedded inside `$testcase` widgets.

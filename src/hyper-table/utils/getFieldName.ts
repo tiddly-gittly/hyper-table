@@ -69,6 +69,7 @@ export function getEnumName(field: string, enumName: unknown): string {
     const lingoBase = schema['lingo-base'] as string | undefined;
     if (lingoBase === undefined) continue;
     const property = schema.properties[field];
+    if (property === undefined) continue;
     const lingoIndex = property.enum?.findIndex((item) => item === enumName);
     // If find the field name, but it is not a enum, mark field cache as `null`
     if (lingoIndex === undefined) {
