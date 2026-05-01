@@ -1,6 +1,10 @@
 title: $:/plugins/linonetwo/hyper-table/changenote
 type: text/vnd.tiddlywiki
 
+! 1.4.6
+
+* Fix table not displaying (blank) when using TraitTag schemas: `getFieldName` also had the same missing null check — `property` could be `undefined` when a field is not defined in a given schema, causing a silent crash that prevented columns from rendering.
+
 ! 1.4.5
 
 * Fix crash: `Cannot read properties of undefined (reading 'enum')` when a tiddler field is not defined in any schema's properties. Added null check before accessing `property.enum` in `getEnumName`.

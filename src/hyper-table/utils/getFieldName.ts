@@ -38,6 +38,7 @@ export function getFieldName(field: string): string {
     const lingoBase = schema['lingo-base'] as string | undefined;
     if (lingoBase === undefined) continue;
     const property = schema.properties[field];
+    if (property === undefined) continue;
     const lingoKey = property.title;
     if (lingoKey) {
       const languageTiddlerTitle = `${lingoBase}${languageCode}/${lingoKey}`;
