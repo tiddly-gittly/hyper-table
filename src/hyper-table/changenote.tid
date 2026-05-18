@@ -1,6 +1,11 @@
 title: $:/plugins/linonetwo/hyper-table/changenote
 type: text/vnd.tiddlywiki
 
+! 1.4.7
+
+* Fix search bar: pressing Enter with a changed query now performs a new search instead of cycling through the previous query's results.
+* Add E2E tests for search bar behavior and TraitTag schema compatibility.
+
 ! 1.4.6
 
 * Fix table not displaying (blank) when using TraitTag schemas: `getFieldName` also had the same missing null check — `property` could be `undefined` when a field is not defined in a given schema, causing a silent crash that prevented columns from rendering.
