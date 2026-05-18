@@ -54,6 +54,8 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
     resultCount.innerText = searchResult.results.length === 0 ? '0/0' : `${searchResult.index + 1}/${searchResult.results.length}`;
   };
 
+  const hasQueryResults = () => (search.queryResult?.length ?? 0) > 0;
+
   const clearSearch = () => {
     input.value = '';
     search.clear();
@@ -75,7 +77,7 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
 
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-      if (search.queryResult.length > 0) {
+      if (hasQueryResults() && input.value === search.queryStr) {
         updateResultCount(search.next());
       } else {
         updateResultCount(search.search(input.value));
@@ -88,13 +90,13 @@ export function searchBar(search: SearchComponent, containerElement: HTMLElement
   clearButton.addEventListener('click', clearSearch);
 
   previousButton.addEventListener('click', () => {
-    if (search.queryResult.length > 0) {
+    if (hasQueryResults()) {
       updateResultCount(search.prev());
     }
   });
 
   nextButton.addEventListener('click', () => {
-    if (search.queryResult.length > 0) {
+    if (hasQueryResults()) {
       updateResultCount(search.next());
     }
   });
