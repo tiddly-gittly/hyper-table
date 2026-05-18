@@ -101,6 +101,61 @@ test.describe('hyper-table: search bar', () => {
     // After search, counter should be N/M (at least one result expected)
     expect(counterText).toMatch(/^\d+\/\d+$/);
   });
+
+  test('pressing Enter for the first search does not throw queryResult error', async ({ page }) => {
+    const pageErrors: string[] = [];
+    const consoleErrors: string[] = [];
+    page.on('pageerror', error => pageErrors.push(error.message));
+    page.on('console', message => {
+      if (message.type() === 'error') {
+        consoleErrors.push(message.text());
+      }
+    });
+
+    await gotoTiddler(page, 'examples/BasicTableWithFilter');
+
+    const searchInput = page.locator('.tc-hyper-table-search-input').first();
+    await expect(searchInput).toBeVisible();
+    await searchInput.fill('caption');
+    await searchInput.press('Enter');
+
+    await page.waitForTimeout(500);
+
+    const runtimeErrors = [...pageErrors, ...consoleErrors].join('\n');
+    expect(runtimeErrors).not.toContain("Cannot read properties of undefined (reading 'length')");
+  });
+
+  test('pressing Enter with a new query performs a new search instead of cycling old results', async ({ page }) => {
+    await gotoTiddler(page, 'examples/BasicTableWithFilter');
+
+    const searchInput = page.locator('.tc-hyper-table-search-input').first();
+    const counter = page.locator('.tc-hyper-table-search-result-count').first();
+    await expect(searchInput).toBeVisible();
+
+    // First search: search for "caption"
+    await searchInput.fill('caption');
+    await searchInput.press('Enter');
+    await page.waitForTimeout(500);
+    const firstCounterText = await counter.textContent();
+    // Should have results for "caption"
+    expect(firstCounterText).toMatch(/^\d+\/\d+$/);
+    const [firstN, firstM] = firstCounterText!.split('/').map(Number);
+    expect(firstM).toBeGreaterThan(0);
+
+    // Now change the query to a different term and press Enter
+    // This should perform a NEW search, not just cycle to next result of "caption"
+    await searchInput.fill('title');
+    await searchInput.press('Enter');
+    await page.waitForTimeout(500);
+    const secondCounterText = await counter.textContent();
+    expect(secondCounterText).toMatch(/^\d+\/\d+$/);
+    const [secondN, secondM] = secondCounterText!.split('/').map(Number);
+
+    // The total results count should be different if the search actually updated
+    // (or at minimum, index should reset to 1, not continue from previous)
+    // If the bug exists, it would show (firstN+1)/firstM instead of a fresh search
+    expect(secondN).toBe(1); // Fresh search should start at index 1
+  });
 });
 
 test.describe('hyper-table: TraitTag schema compatibility (regression)', () => {
